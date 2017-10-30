@@ -7,8 +7,155 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:OrderingBlockControl">
-                    <Grid>
-                        
+                    <Grid Padding="20,0,20,0" Margin="0,0,0,29" Background="#F6F6F6">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="ExpandState">
+                                <VisualState x:Name="Expanded">
+                                    <Storyboard>
+                                        <FadeInThemeAnimation TargetName="ContentContainer" />
+                                        <DoubleAnimation BeginTime="0:0:0" Duration="0:0:0.1" To="180.0"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                         Storyboard.TargetName="ExpandImage" />
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentContainer"
+                                                                       Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Collapsed">
+                                    <Storyboard>
+                                        <FadeOutThemeAnimation TargetName="ContentContainer" />
+                                        <DoubleAnimation BeginTime="0:0:0" Duration="0:0:0.1" To="0" From="180"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                         Storyboard.TargetName="ExpandImage" />
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentContainer"
+                                                                       Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.2">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid.RowDefinitions>
+                            <!-- 0 - Space -->
+                            <RowDefinition Height="15"/>
+                            <!-- 1 - Header -->
+                            <RowDefinition Height="22"/>
+                            <!-- 2 - Space -->
+                            <RowDefinition Height="15"/>
+                            <!-- 3 - Content -->
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="1">
+                            <TextBlock FontSize="18" FontFamily="{StaticResource MvideoFontRegular}"
+                                       Text="{Binding Block.Time, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="Transparent">
+                                <Image Source="/Assets/Icons/edit_icon.png"
+                                       Width="23" Height="22" Margin="0,0,25,0"/>
+                                <Image x:Name="ExpandImage" Source="/Assets/Icons/expand_arrow.png"
+                                       Width="16" Height="8" VerticalAlignment="Center"
+                                       RenderTransformOrigin="0.5,0.5">
+                                    <Image.RenderTransform>
+                                        <RotateTransform x:Name="ExpandImageRotateTransform" Angle="180"/>
+                                    </Image.RenderTransform>
+                                </Image>
+                            </StackPanel>
+                        </Grid>
+                        <Grid x:Name="ContentContainer" Grid.Row="3">
+                            <Grid.RowDefinitions>
+                                <!-- 0 - Line -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- 1 - Space -->
+                                <RowDefinition Height="12"/>
+                                <!-- 2 - Address & Recipient Info-->
+                                <RowDefinition Height="Auto"/>
+                                <!-- 3 - Space -->
+                                <RowDefinition Height="24"/>
+                                <!-- 4 - Products' List -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- 5 - Space -->
+                                <RowDefinition Height="10"/>
+                            </Grid.RowDefinitions>
+                            <Rectangle Grid.Row="0" Height="1" HorizontalAlignment="Stretch" Fill="#E5E5E5"/>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <!-- 0 - Checkbox -->
+                                    <ColumnDefinition Width="31"/>
+                                    <!-- 1 - Name -->
+                                    <ColumnDefinition Width="417*"/>
+                                    <!-- 2 - Space -->
+                                    <ColumnDefinition Width="20*"/>
+                                    <!-- 3 - Recipient & Price -->
+                                    <ColumnDefinition Width="200*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical">
+                                    <TextBlock Text="Адрес:" Margin="0,0,0,5" FontSize="12" FontFamily="{StaticResource MvideoFontRegular}"
+                                           Foreground="#A3A3A3"/>
+                                    <TextBlock Text="{Binding Block.Address, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                           FontSize="15" FontFamily="{StaticResource MvideoFontRegular}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="3" Orientation="Vertical">
+                                    <TextBlock Text="Получатель:" Margin="0,0,0,5" FontSize="12" FontFamily="{StaticResource MvideoFontRegular}"
+                                           Foreground="#A3A3A3"/>
+                                    <TextBlock Text="{Binding Block.Recipient, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                           FontSize="15" FontFamily="{StaticResource MvideoFontRegular}"/>
+                                </StackPanel>
+                            </Grid>
+                            <ItemsControl Grid.Row="4" ItemsSource="{Binding Block.Products, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="0,0,0,15">
+                                            <Grid.RowDefinitions>
+                                                <!-- 0 - Product's Header -->
+                                                <RowDefinition Height="20"/>
+                                                <!-- 1 - Services's List -->
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <!-- 0 - Checkbox -->
+                                                <ColumnDefinition Width="31"/>
+                                                <!-- 1 - Name -->
+                                                <ColumnDefinition Width="417*"/>
+                                                <!-- 2 - Space -->
+                                                <ColumnDefinition Width="20*"/>
+                                                <!-- 3 - Recipient & Price -->
+                                                <ColumnDefinition Width="200*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+                                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=OneWay}"
+                                                   FontSize="15" FontFamily="{StaticResource MvideoFontRegular}"
+                                                   VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding TotalPrice, Converter={StaticResource PriceFormatter}}"
+                                                   FontSize="15" HorizontalAlignment="Right"
+                                                   FontFamily="{StaticResource MvideoFontRegular}"/>
+                                            <ItemsControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
+                                                      ItemsSource="{Binding Services, Mode=OneWay}"
+                                                      Margin="0,0,0,0">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid Margin="32,9,0,0">
+                                                            <TextBlock Text="{Binding Name, Mode=OneWay}" Foreground="#5B5B5B"
+                                                                   FontSize="13" FontFamily="{StaticResource MvideoFontRegular}"/>
+                                                            <TextBlock Text="{Binding Price, Converter={StaticResource PriceFormatter}}"
+                                                                   FontSize="13" HorizontalAlignment="Right" Foreground="#5B5B5B"
+                                                                   FontFamily="{StaticResource MvideoFontRegular}"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

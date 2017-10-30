@@ -118,13 +118,22 @@
         </StackPanel>
         <Border Grid.Row="6" HorizontalAlignment="Stretch" Height="1" Background="#E5E5E5" Margin="30,0"/>
         <ScrollViewer Grid.Row="8" Margin="30,0" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Hidden">
-            <ItemsControl ItemsSource="{x:Bind _viewModel.Products, Mode=OneWay}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="models:OrderingProduct">
-                        <controls:OrderingProductControl Product="{x:Bind Mode=OneWay}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <StackPanel Orientation="Vertical">
+                <ItemsControl ItemsSource="{x:Bind _viewModel.Blocks, Mode=OneWay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:OrderingBlock">
+                            <controls:OrderingBlockControl Block="{x:Bind Mode=OneWay}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl ItemsSource="{x:Bind _viewModel.Products, Mode=OneWay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:OrderingProduct">
+                            <controls:OrderingProductControl Product="{x:Bind Mode=OneWay}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
         </ScrollViewer>
         <Border Grid.Row="9" HorizontalAlignment="Stretch" Height="1" Background="#E5E5E5"/>
         <Grid Grid.Row="10" Height="97" Padding="19,17,19,20">

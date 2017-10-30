@@ -17,7 +17,7 @@ namespace RTDLayouts.Controls
 {
     public sealed class OrderingProductControl : Control
     {
-        private bool _isExpanded = false;
+        private bool _isExpanded;
 
         private Image _expandImage;
 

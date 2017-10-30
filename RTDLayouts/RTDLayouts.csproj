@@ -150,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Icons\arrow_up.png" />
+    <Content Include="Assets\Icons\edit_icon.png" />
     <Content Include="Assets\Icons\expand_arrow.png" />
     <Content Include="Assets\Icons\icon_close.png" />
     <Content Include="Assets\Icons\icon_search.png" />

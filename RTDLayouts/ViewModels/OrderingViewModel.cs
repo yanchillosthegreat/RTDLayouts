@@ -160,8 +160,19 @@ namespace RTDLayouts.ViewModels
                 new OrderingProduct("Ноутбук Dell XPS 13 9350-2082", "5 августа", "5 августа", 8590)
             };
 
+            Blocks = new ObservableCollection<OrderingBlock>
+            {
+                new OrderingBlock
+                {
+                    Address = "г. Москва, ул. Тверская, д. 6 стр. 61, кв. 4",
+                    Products = new ObservableCollection<OrderingProduct>(Products.Take(3)),
+                    Recipient = "Иванов Константин",
+                    Time = "Доставка 25 августа (19:00-22:00; 800р.)",
+                    Type = OrderingBlockType.Pickup
+                }
+            };
+
             SelectedProducts = new ObservableCollection<OrderingProduct>();
-            Blocks = new ObservableCollection<OrderingBlock>();
             TotalProductsCount = Products.Count;
             TotalPrice = Products.Sum(x => x.TotalPrice);
 
