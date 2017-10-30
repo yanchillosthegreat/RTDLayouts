@@ -1,0 +1,129 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:RTDLayouts.Controls"
+    xmlns:converters="using:RTDLayouts.Converters"
+    xmlns:models="using:RTDLayouts.Models">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Controls/RTDContentDialog/RTDContentDialog.xaml"/>
+        <ResourceDictionary Source="/Controls/OrderingProductControl/OrderingProductControl.xaml"/>
+        <ResourceDictionary Source="/Controls/StepsBarButton/StepsBarButton.xaml"/>
+        <ResourceDictionary Source="/Controls/PickUpTextBox/PickUpTextBox.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    
+    <FontFamily x:Key="MvideoFontRegular">Assets/Fonts/M.Video_regular.otf#M.Video</FontFamily>
+    <FontFamily x:Key="MvideoFontBold">Assets/Fonts/M.Video_bold.otf#M.Video</FontFamily>
+
+    <converters:DateTimeFormatToWord x:Key="DateTimeFormatToWord"/>
+    <converters:PriceFormatter x:Key="PriceFormatter"/>
+
+    <Style TargetType="controls:StoresListControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:StoresListControl">
+                    <Grid
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="6"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Магазинов: 10" FontSize="13" Opacity="0.6"/>
+                        <Grid Row="2" HorizontalAlignment="Stretch" Height="62" Background="#F0F2F2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="13*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="6*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="6*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="6*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Адрес:" FontSize="15" Foreground="#5B5B5B" 
+                                       VerticalAlignment="Center" FontFamily="{StaticResource MvideoFontBold}"
+                                       FontWeight="Bold" Margin="20,0,0,0"/>
+                            <TextBlock Grid.Column="2" Text="Метро рядом:" FontSize="15" Foreground="#5B5B5B" 
+                                       VerticalAlignment="Center" FontFamily="{StaticResource MvideoFontBold}"
+                                       FontWeight="Bold"/>
+                            <TextBlock Grid.Column="4" Text="Шт." FontSize="15" Foreground="#5B5B5B" 
+                                       HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       FontFamily="{StaticResource MvideoFontBold}" FontWeight="Bold"/>
+                            <TextBlock Grid.Column="6" Text="Часы работы:" FontSize="15" Foreground="#5B5B5B" 
+                                       VerticalAlignment="Center" FontFamily="{StaticResource MvideoFontBold}"
+                                       FontWeight="Bold" />
+                        </Grid>
+                        <ListView Grid.Row="3" ItemsSource="{TemplateBinding Stores}"
+                                  SelectionMode="None" ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                  ItemTemplate="{StaticResource StoreRowDataTemplate}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="MinHeight" Value="0"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:WarehousesListControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:WarehousesListControl">
+                    <Grid
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="6"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Складов: 10" FontSize="13" Opacity="0.6"/>
+                        <Grid Row="2" HorizontalAlignment="Stretch" Height="32" Background="#F0F2F2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="103*"/>
+                                <ColumnDefinition Width="10*"/>
+                                <ColumnDefinition Width="103*"/>
+                                <ColumnDefinition Width="10*"/>
+                                <ColumnDefinition Width="103*"/>
+                                <ColumnDefinition Width="10*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="1" Text="Номер склада:" FontSize="15" Foreground="#5B5B5B" 
+                                       VerticalAlignment="Center" FontFamily="{StaticResource MvideoFontBold}"
+                                       FontWeight="Bold"/>
+                            <TextBlock Grid.Column="3" Text="Дата доставки:" FontSize="15" Foreground="#5B5B5B" 
+                                       VerticalAlignment="Center" FontFamily="{StaticResource MvideoFontBold}"
+                                       FontWeight="Bold"/>
+                            <TextBlock Grid.Column="5" Text="Шт." FontSize="15" Foreground="#5B5B5B" 
+                                       FontFamily="{StaticResource MvideoFontBold}" FontWeight="Bold"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <ListView Grid.Row="3" ItemsSource="{TemplateBinding Warehouses}"
+                                  SelectionMode="None" ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                  ItemTemplate="{StaticResource WarehouseRowDataTemplate}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="Margin" Value="0 23 0 0"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>

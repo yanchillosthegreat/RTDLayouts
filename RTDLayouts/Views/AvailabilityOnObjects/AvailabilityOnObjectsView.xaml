@@ -1,0 +1,54 @@
+﻿<UserControl
+    x:Class="RTDLayouts.Views.AvailabilityOnObjectsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:RTDLayouts.Controls">
+    <Grid Margin="44,60,23,0">
+        <Grid.RowDefinitions>
+            <!--View Title-->
+            <RowDefinition Height="Auto"/>
+            <!--Space-->
+            <RowDefinition Height="6"/>
+            <!--Product Name-->
+            <RowDefinition Height="Auto"/>
+            <!--Space-->
+            <RowDefinition Height="20"/>
+            <!--Stores\Warehouses, Search-->
+            <RowDefinition Height="Auto"/>
+            <!--Space-->
+            <RowDefinition Height="20"/>
+            <!--Stores' List-->
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Доступность на объектах (магазины или склады)"
+                   Foreground="#000100" FontSize="24"/>
+        <TextBlock Grid.Row="2" Text="Телевизор Philips 49PUS7100/60"
+                   Foreground="#111111" FontSize="15"/>
+        <Grid Row="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="6"/>
+                <RowDefinition Height="32"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Выбор типа объекта"
+                       FontSize="13" Opacity="0.6"/>
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="Поиск по магазинам"
+                       FontSize="13" Opacity="0.6"/>
+            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
+                <RadioButton x:Name="StoresRadioButton" Content="Магазины" Width="130" FontSize="15" Checked="OnStoresChecked"
+                             Style="{StaticResource MvideoRadioButtonStyle}" Height="32" FontWeight="SemiBold"/>
+                <RadioButton x:Name="WarehouseRadioButton" Content="Склады" Width="130" FontSize="15" Checked="OnWarehousesChecked"
+                             Style="{StaticResource MvideoRadioButtonStyle}" Height="32" FontWeight="SemiBold"/>
+            </StackPanel>
+            <controls:SubmittableTextBox Grid.Row="2" Grid.Column="2" SubmitButtonRequire="True"
+                                         Text="{Binding FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         PlaceholderText="Введите адрес или станцию метро" Width="317"/>
+        </Grid>
+        <ContentControl x:Name="ContentControl" Grid.Row="6" HorizontalContentAlignment="Stretch"/>
+    </Grid>
+</UserControl>

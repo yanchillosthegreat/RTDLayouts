@@ -1,0 +1,61 @@
+﻿<UserControl
+    x:Class="RTDLayouts.Views.DeliveryRegistrationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:RTDLayouts.Controls">
+    <Grid>
+        <Grid.RowDefinitions>
+            <!---->
+            <RowDefinition Height="23"/>
+            <!---->
+            <RowDefinition Height="Auto"/>
+            <!---->
+            <RowDefinition Height="14"/>
+            <!---->
+            <RowDefinition Height="30"/>
+            <!---->
+            <RowDefinition Height="25"/>
+            <!---->
+            <RowDefinition Height="Auto"/>
+            <!---->
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <!---->
+            <ColumnDefinition Width="24"/>
+            <!---->
+            <ColumnDefinition Width="*"/>
+            <!---->
+            <ColumnDefinition Width="26"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="Оформление доставки"
+                   FontSize="24" FontFamily="{StaticResource MvideoFontRegular}"/>
+            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                <controls:StepsBarButton Content="Адрес"
+                                     Width="207" Height="30"
+                                     Background="Red" ArrowLength="7"
+                                     Index="1" Position="First"/>
+                <controls:StepsBarButton Content="Дата и время" 
+                                     Background="Red" ArrowLength="7"
+                                     Width="207" Height="30" IsEnabled="False"
+                                     Index="2" Position="Between"/>
+                <controls:StepsBarButton Content="Получатель"
+                                     Background="Red" ArrowLength="7"
+                                     Width="207" Height="30" IsEnabled="False"
+                                     Index="3" Position="Last"/>
+            </StackPanel>
+            <Grid Grid.Row="5" Grid.Column="1">
+                <Rectangle Fill="#E5E5E5" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Content="Новый адрес" Margin="0,0,40,0"
+                                 FontSize="16"
+                                 FontFamily="{StaticResource MvideoFontRegular}"
+                                 Style="{StaticResource RadioButtonWithArrow}"/>
+                    <RadioButton Content="Сохраненные адреса"
+                                 FontSize="16"
+                                 FontFamily="{StaticResource MvideoFontRegular}"
+                                 Style="{StaticResource RadioButtonWithArrow}"/>
+                </StackPanel>
+            </Grid>
+    </Grid>
+</UserControl>
