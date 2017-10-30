@@ -13,16 +13,16 @@ namespace RTDLayouts.ViewModels
     {
         private bool _lockCheckBoxesBindingUpdating;
 
-        private int _selectedProductsCount;
-        public int SelectedProductsCount
-        {
-            get => _selectedProductsCount;
-            set
-            {
-                Set(ref _selectedProductsCount, value);
-                CheckButtonsAvailability();
-            }
-        }
+        //private int _selectedProductsCount;
+        //public int SelectedProductsCount
+        //{
+        //    get => _selectedProductsCount;
+        //    set
+        //    {
+        //        Set(ref _selectedProductsCount, value);
+        //        CheckButtonsAvailability();
+        //    }
+        //}
 
         private int _totalProductsCount;
         public int TotalProductsCount
@@ -53,6 +53,10 @@ namespace RTDLayouts.ViewModels
         }
 
         public ObservableCollection<OrderingProduct> Products { get; }
+
+        public ObservableCollection<OrderingProduct> SelectedProducts { get; }
+
+        public ObservableCollection<OrderingBlock> Blocks { get; }
 
         private bool _selectAllProductsCheckBoxSelected;
         public bool SelectAllProductsCheckBoxSelected
@@ -156,10 +160,10 @@ namespace RTDLayouts.ViewModels
                 new OrderingProduct("Ноутбук Dell XPS 13 9350-2082", "5 августа", "5 августа", 8590)
             };
 
+            SelectedProducts = new ObservableCollection<OrderingProduct>();
+            Blocks = new ObservableCollection<OrderingBlock>();
             TotalProductsCount = Products.Count;
             TotalPrice = Products.Sum(x => x.TotalPrice);
-            //ReadyForExecutionProductsCount = 0;
-            //DeliveryPrice = 800;
 
             Products.ToList().ForEach(x => x.PropertyChanged += OnProductPropertyChanged);
         }
@@ -168,18 +172,27 @@ namespace RTDLayouts.ViewModels
         {
             if (args.PropertyName == nameof(OrderingProduct.IsSelected))
             {
-                SelectedProductsCount = Products.Count(x => x.IsSelected);
+                if (!(sender is OrderingProduct product)) return;
 
                 _lockCheckBoxesBindingUpdating = true;
-                if (sender is OrderingProduct product && !product.IsSelected)
+
+                if (product.IsSelected)
                 {
+                    SelectedProducts.Add(product);
+                    if (Products.All(x => x.IsSelected))
+                    {
+                        SelectAllProductsCheckBoxSelected = true;
+                    }
+                }
+                else
+                {
+                    SelectedProducts.Remove(product);
                     SelectAllProductsCheckBoxSelected = false;
                 }
-                else if (Products.All(x => x.IsSelected))
-                {
-                    SelectAllProductsCheckBoxSelected = true;
-                }
+
                 _lockCheckBoxesBindingUpdating = false;
+
+                CheckButtonsAvailability();
             }
         }
 
@@ -188,7 +201,6 @@ namespace RTDLayouts.ViewModels
             if (_lockCheckBoxesBindingUpdating) return;
 
             Products.ToList().ForEach(x => x.IsSelected = true);
-            SelectedProductsCount = Products.Count;
         }
 
         public void UnselectAllProducts()
@@ -196,12 +208,11 @@ namespace RTDLayouts.ViewModels
             if (_lockCheckBoxesBindingUpdating) return;
 
             Products.ToList().ForEach(x => x.IsSelected = false);
-            SelectedProductsCount = 0;
         }
 
         private void CheckButtonsAvailability()
         {
-            if (SelectedProductsCount == 0)
+            if (SelectedProducts.Count == 0)
             {
                 DeliveryButtonIsActive = PickupButtonIsActive = false;
             }

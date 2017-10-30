@@ -10,6 +10,7 @@
         <ResourceDictionary Source="/Controls/OrderingProductControl/OrderingProductControl.xaml"/>
         <ResourceDictionary Source="/Controls/StepsBarButton/StepsBarButton.xaml"/>
         <ResourceDictionary Source="/Controls/PickUpTextBox/PickUpTextBox.xaml"/>
+        <ResourceDictionary Source="/Controls/OrderingBlockControl/OrderingBlockControl.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     
     <FontFamily x:Key="MvideoFontRegular">Assets/Fonts/M.Video_regular.otf#M.Video</FontFamily>

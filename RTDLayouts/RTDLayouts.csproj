@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="Common\AppSettings.cs" />
     <Compile Include="Common\XamlHelper.cs" />
+    <Compile Include="Controls\OrderingBlockControl\OrderingBlockControl.cs" />
     <Compile Include="Controls\OrderingProductControl\OrderingProductControl.cs" />
     <Compile Include="Controls\PickUpTextBox\PickUpTextBox.cs" />
     <Compile Include="Controls\RTDContentDialog\RTDContentDialog.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderingBlock.cs" />
     <Compile Include="Models\OrderingProduct.cs" />
     <Compile Include="Models\OrderingService.cs" />
     <Compile Include="Models\Store.cs" />
@@ -168,6 +170,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\OrderingBlockControl\OrderingBlockControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="Controls\OrderingProductControl\OrderingProductControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

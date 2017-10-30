@@ -80,7 +80,10 @@ namespace RTDLayouts.Views
                 Content = pickupRegistrationView
             };
             pickupRegistrationView.OnCancelRequested += () => { contentDialog.Hide();};
-            pickupRegistrationView.OnAcceptRequested += () => { contentDialog.Hide(); };
+            pickupRegistrationView.OnAcceptRequested += () =>
+            {
+                contentDialog.Hide();
+            };
             await contentDialog.ShowAsync();
         }
     }
