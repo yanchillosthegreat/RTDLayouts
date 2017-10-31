@@ -13,17 +13,6 @@ namespace RTDLayouts.ViewModels
     {
         private bool _lockCheckBoxesBindingUpdating;
 
-        //private int _selectedProductsCount;
-        //public int SelectedProductsCount
-        //{
-        //    get => _selectedProductsCount;
-        //    set
-        //    {
-        //        Set(ref _selectedProductsCount, value);
-        //        CheckButtonsAvailability();
-        //    }
-        //}
-
         private int _totalProductsCount;
         public int TotalProductsCount
         {
@@ -162,14 +151,23 @@ namespace RTDLayouts.ViewModels
 
             Blocks = new ObservableCollection<OrderingBlock>
             {
-                new OrderingBlock
-                {
-                    Address = "г. Москва, ул. Тверская, д. 6 стр. 61, кв. 4",
-                    Products = new ObservableCollection<OrderingProduct>(Products.Take(3)),
-                    Recipient = "Иванов Константин",
-                    Time = "Доставка 25 августа (19:00-22:00; 800р.)",
-                    Type = OrderingBlockType.Pickup
-                }
+                //new OrderingBlock
+                //{
+                //    Products = new ObservableCollection<OrderingProduct>(Products.Take(3)),
+                //    Address = "г. Москва, ул. Тверская, д. 6 стр. 61, кв. 4",
+                //    Recipient = "Иванов Константин",
+                //    Time = "19:00 - 22:00",
+                //    Date = DateTime.Today,
+                //    DeliveryPrice = 800,
+                //    Type = OrderingBlockType.Delivery
+                //},
+                //new OrderingBlock
+                //{
+                //    Products = new ObservableCollection<OrderingProduct>(Products.Take(2)),
+                //    Recipient = "Иванов Константин",
+                //    Date = DateTime.Today,
+                //    Type = OrderingBlockType.Pickup
+                //}
             };
 
             SelectedProducts = new ObservableCollection<OrderingProduct>();

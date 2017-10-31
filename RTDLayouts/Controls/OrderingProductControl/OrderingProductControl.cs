@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.UI.Xaml;
@@ -33,7 +34,19 @@ namespace RTDLayouts.Controls
         }
 
         public static readonly DependencyProperty ProductProperty =
-            DependencyProperty.Register("Product", typeof(OrderingProduct), typeof(OrderingProductControl), new PropertyMetadata(default(OrderingProduct)));
+            DependencyProperty.Register("Product", typeof(OrderingProduct), typeof(OrderingProductControl), new PropertyMetadata(default(OrderingProduct), OnProductChanged));
+
+        private static void OnProductChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is OrderingProductControl orderingProductControl)
+            {
+                orderingProductControl.UpdateState();
+                if (orderingProductControl.Product != null)
+                {
+                    orderingProductControl.Product.PropertyChanged += (sender, args) => orderingProductControl.UpdateState();
+                }
+            }
+        }
 
         protected override void OnApplyTemplate()
         {
@@ -81,6 +94,11 @@ namespace RTDLayouts.Controls
             VisualStateManager.GoToState(
                 this,
                 _isExpanded ? "ExpandedState" : "CollapsedState",
+                true);
+
+            VisualStateManager.GoToState(
+                this,
+                Product.IsInAGroup ? "InGroupState" : "AloneState",
                 true);
         }
     }

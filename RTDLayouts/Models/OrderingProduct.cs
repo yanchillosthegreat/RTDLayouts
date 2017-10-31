@@ -23,6 +23,13 @@ namespace RTDLayouts.Models
             set => Set(ref _isSelected, value);
         }
 
+        public bool _isInAGroup;
+        public bool IsInAGroup
+        {
+            get => _isInAGroup;
+            set => Set(ref _isInAGroup, value);
+        }
+
         public OrderingProduct(string name, string pickupDate, string deliveryDate, int totalPrice)
         {
             Name = name;

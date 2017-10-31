@@ -79,10 +79,15 @@ namespace RTDLayouts.Views
             {
                 Content = pickupRegistrationView
             };
-            pickupRegistrationView.OnCancelRequested += () => { contentDialog.Hide();};
+            pickupRegistrationView.OnCancelRequested += () =>
+            {
+                contentDialog.Hide();
+                _viewModel.SelectedProducts.ToList().ForEach(x => x.IsInAGroup = true);
+            };
             pickupRegistrationView.OnAcceptRequested += () =>
             {
                 contentDialog.Hide();
+                _viewModel.SelectedProducts.ToList().ForEach(x => x.IsInAGroup = true);
             };
             await contentDialog.ShowAsync();
         }

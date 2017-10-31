@@ -52,6 +52,11 @@ namespace RTDLayouts.Controls
                 this,
                 _isExpanded ? "Expanded" : "Collapsed",
                 true);
+
+            VisualStateManager.GoToState(
+                this,
+                Block.Type == OrderingBlockType.Delivery ? "DeliveryState" : "PickupState",
+                true);
         }
 
         public OrderingBlock Block

@@ -43,6 +43,48 @@
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
+                            <VisualStateGroup x:Name="BlockState">
+                                <VisualState x:Name="DeliveryState">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeliveryBlockTitle"
+                                                                       Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeliveryBlockInfoContainer"
+                                                                       Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="PickupState">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PickupBlockTitle"
+                                                                       Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PickupBlockInfoContainer"
+                                                                       Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid.RowDefinitions>
                             <!-- 0 - Space -->
@@ -55,8 +97,22 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="1">
-                            <TextBlock FontSize="18" FontFamily="{StaticResource MvideoFontRegular}"
-                                       Text="{Binding Block.Time, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"/>
+                            <TextBlock x:Name="DeliveryBlockTitle" FontSize="18" FontFamily="{StaticResource MvideoFontRegular}"
+                                       Visibility="Collapsed">
+                                <Run Text="Доставка"/>
+                                <Run Text="{Binding Block.Date, RelativeSource={RelativeSource TemplatedParent},
+                                    Converter={StaticResource DateTimeFormatToWord}, Mode=OneWay}"/>
+                                <Run Text="(" Foreground="#949494"/><Run Text="{Binding Block.Time, RelativeSource={RelativeSource TemplatedParent},
+                                    Mode=OneWay}" Foreground="#949494"/><Run Text=";" Foreground="#949494"/><Run Text="{Binding Block.DeliveryPrice, 
+                                    RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay,
+                                    Converter={StaticResource PriceFormatter}}"/><Run Text=")" Foreground="#949494"/>
+                            </TextBlock>
+                            <TextBlock x:Name="PickupBlockTitle" FontSize="18" FontFamily="{StaticResource MvideoFontRegular}"
+                                       Visibility="Collapsed">
+                                <Run Text="Самовывоз,"/>
+                                <Run Text="{Binding Block.Date, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay,
+                                    Converter={StaticResource DateTimeFormatToWord}}"/>
+                            </TextBlock>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="Transparent">
                                 <Image Source="/Assets/Icons/edit_icon.png"
                                        Width="23" Height="22" Margin="0,0,25,0"/>
@@ -85,7 +141,7 @@
                                 <RowDefinition Height="10"/>
                             </Grid.RowDefinitions>
                             <Rectangle Grid.Row="0" Height="1" HorizontalAlignment="Stretch" Fill="#E5E5E5"/>
-                            <Grid Grid.Row="2">
+                            <Grid x:Name="DeliveryBlockInfoContainer" Grid.Row="2" Visibility="Collapsed">
                                 <Grid.ColumnDefinitions>
                                     <!-- 0 - Checkbox -->
                                     <ColumnDefinition Width="31"/>
@@ -107,6 +163,14 @@
                                            Foreground="#A3A3A3"/>
                                     <TextBlock Text="{Binding Block.Recipient, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                            FontSize="15" FontFamily="{StaticResource MvideoFontRegular}"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid x:Name="PickupBlockInfoContainer" Grid.Row="2" Visibility="Collapsed">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="Получатель:" Margin="0,0,0,5" FontSize="12" FontFamily="{StaticResource MvideoFontRegular}"
+                                               Foreground="#A3A3A3"/>
+                                    <TextBlock Text="{Binding Block.Recipient, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                               FontSize="15" FontFamily="{StaticResource MvideoFontRegular}"/>
                                 </StackPanel>
                             </Grid>
                             <ItemsControl Grid.Row="4" ItemsSource="{Binding Block.Products, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
