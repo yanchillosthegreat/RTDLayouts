@@ -91,5 +91,25 @@ namespace RTDLayouts.Views
             };
             await contentDialog.ShowAsync();
         }
+
+        private async void MoveProductsButtonTapped(object sender, TappedRoutedEventArgs e)
+        {
+            var сhangeProductsBlockView = new ChangeProductsBlockView();
+            var contentDialog = new RTDContentDialog
+            {
+                Content = сhangeProductsBlockView
+            };
+            сhangeProductsBlockView.OnCancelRequested += () =>
+            {
+                contentDialog.Hide();
+                //_viewModel.SelectedProducts.ToList().ForEach(x => x.IsInAGroup = true);
+            };
+            сhangeProductsBlockView.OnAcceptRequested += () =>
+            {
+                contentDialog.Hide();
+                //_viewModel.SelectedProducts.ToList().ForEach(x => x.IsInAGroup = true);
+            };
+            await contentDialog.ShowAsync();
+        }
     }
 }

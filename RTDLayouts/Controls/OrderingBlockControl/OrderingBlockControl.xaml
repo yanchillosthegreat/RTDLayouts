@@ -85,6 +85,53 @@
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
+                            <VisualStateGroup x:Name="StyleState">
+                                <VisualState x:Name="ApproveState">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EditIcon"
+                                                                       Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandImage"
+                                                                       Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PickupBlockInfoContainer"
+                                                                       Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ApproveProductsList"
+                                                                       Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OrderingProductsList"
+                                                                       Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="OrderingState"/>
+                            </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid.RowDefinitions>
                             <!-- 0 - Space -->
@@ -114,7 +161,7 @@
                                     Converter={StaticResource DateTimeFormatToWord}}"/>
                             </TextBlock>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="Transparent">
-                                <Image Source="/Assets/Icons/edit_icon.png"
+                                <Image x:Name="EditIcon" Source="/Assets/Icons/edit_icon.png"
                                        Width="23" Height="22" Margin="0,0,25,0"/>
                                 <Image x:Name="ExpandImage" Source="/Assets/Icons/expand_arrow.png"
                                        Width="16" Height="8" VerticalAlignment="Center"
@@ -129,19 +176,17 @@
                             <Grid.RowDefinitions>
                                 <!-- 0 - Line -->
                                 <RowDefinition Height="Auto"/>
-                                <!-- 1 - Space -->
-                                <RowDefinition Height="12"/>
-                                <!-- 2 - Address & Recipient Info-->
+                                <!-- 1 - Address & Recipient Info-->
                                 <RowDefinition Height="Auto"/>
-                                <!-- 3 - Space -->
+                                <!-- 2 - Space -->
                                 <RowDefinition Height="24"/>
-                                <!-- 4 - Products' List -->
+                                <!-- 3 - Products' List -->
                                 <RowDefinition Height="Auto"/>
-                                <!-- 5 - Space -->
+                                <!-- 4 - Space -->
                                 <RowDefinition Height="10"/>
                             </Grid.RowDefinitions>
                             <Rectangle Grid.Row="0" Height="1" HorizontalAlignment="Stretch" Fill="#E5E5E5"/>
-                            <Grid x:Name="DeliveryBlockInfoContainer" Grid.Row="2" Visibility="Collapsed">
+                            <Grid x:Name="DeliveryBlockInfoContainer" Grid.Row="1" Visibility="Collapsed" Margin="0,12,0,0">
                                 <Grid.ColumnDefinitions>
                                     <!-- 0 - Checkbox -->
                                     <ColumnDefinition Width="31"/>
@@ -165,7 +210,7 @@
                                            FontSize="15" FontFamily="{StaticResource MvideoFontRegular}"/>
                                 </StackPanel>
                             </Grid>
-                            <Grid x:Name="PickupBlockInfoContainer" Grid.Row="2" Visibility="Collapsed">
+                            <Grid x:Name="PickupBlockInfoContainer" Grid.Row="1" Visibility="Collapsed" Margin="0,12,0,0">
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Text="Получатель:" Margin="0,0,0,5" FontSize="12" FontFamily="{StaticResource MvideoFontRegular}"
                                                Foreground="#A3A3A3"/>
@@ -173,7 +218,7 @@
                                                FontSize="15" FontFamily="{StaticResource MvideoFontRegular}"/>
                                 </StackPanel>
                             </Grid>
-                            <ItemsControl Grid.Row="4" ItemsSource="{Binding Block.Products, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
+                            <ItemsControl x:Name="OrderingProductsList" Grid.Row="3" ItemsSource="{Binding Block.Products, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Grid Margin="0,0,0,15">
@@ -206,6 +251,50 @@
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
                                                         <Grid Margin="32,9,0,0">
+                                                            <TextBlock Text="{Binding Name, Mode=OneWay}" Foreground="#5B5B5B"
+                                                                   FontSize="13" FontFamily="{StaticResource MvideoFontRegular}"/>
+                                                            <TextBlock Text="{Binding Price, Converter={StaticResource PriceFormatter}}"
+                                                                   FontSize="13" HorizontalAlignment="Right" Foreground="#5B5B5B"
+                                                                   FontFamily="{StaticResource MvideoFontRegular}"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <ItemsControl x:Name="ApproveProductsList" Grid.Row="3" ItemsSource="{Binding Block.Products, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                          Visibility="Collapsed">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="0,0,0,15">
+                                            <Grid.RowDefinitions>
+                                                <!-- 0 - Product's Header -->
+                                                <RowDefinition Height="20"/>
+                                                <!-- 1 - Services's List -->
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <!-- 0 - Name -->
+                                                <ColumnDefinition Width="417*"/>
+                                                <!-- 1 - Space -->
+                                                <ColumnDefinition Width="20*"/>
+                                                <!-- 2 - Recipient & Price -->
+                                                <ColumnDefinition Width="200*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Name, Mode=OneWay}"
+                                                   FontSize="15" FontFamily="{StaticResource MvideoFontRegular}"
+                                                   VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding TotalPrice, Converter={StaticResource PriceFormatter}}"
+                                                   FontSize="15" HorizontalAlignment="Right"
+                                                   FontFamily="{StaticResource MvideoFontRegular}"/>
+                                            <ItemsControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                                                      ItemsSource="{Binding Services, Mode=OneWay}"
+                                                      Margin="0,0,0,0">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid Margin="1,9,0,0">
                                                             <TextBlock Text="{Binding Name, Mode=OneWay}" Foreground="#5B5B5B"
                                                                    FontSize="13" FontFamily="{StaticResource MvideoFontRegular}"/>
                                                             <TextBlock Text="{Binding Price, Converter={StaticResource PriceFormatter}}"

@@ -164,16 +164,23 @@
                         FontSize="13" FontWeight="Bold" FontFamily="{StaticResource MvideoFontBold}"
                         Style="{StaticResource MVideoButtonStyle}" Tapped="DeliveryButtonTapped"
                         IsEnabled="False"/> <!--IsEnabled="{x:Bind _viewModel.DeliveryButtonIsActive, Mode=OneWay}"-->
-                <Button Content="Самовывоз" Width="120" Height="32"
+                <Button Content="Самовывоз" Width="120" Height="32" Margin="0,0,20,0"
                         FontSize="13" FontWeight="Bold" FontFamily="{StaticResource MvideoFontBold}"
                         Style="{StaticResource MVideoButtonStyle}" Tapped="PickupButtonTapped"
                         IsEnabled="{x:Bind _viewModel.PickupButtonIsActive, Mode=OneWay}" />
+
+
+                <Button Content="Переместить" Width="120" Height="32"
+                        FontSize="13" FontWeight="Bold" FontFamily="{StaticResource MvideoFontBold}"
+                        Style="{StaticResource MVideoButtonStyle}" Tapped="MoveProductsButtonTapped"
+                        IsEnabled="True" />
+
             </StackPanel>
             <Button Grid.Row="2" HorizontalAlignment="Right"
                     Content="Оформить" Width="120" Height="32"
                     FontSize="13" FontWeight="Bold" FontFamily="{StaticResource MvideoFontBold}"
                     Style="{StaticResource MVideoButtonStyle}"
-                    IsEnabled="False"/>
+                    IsEnabled="True"/>
         </Grid> 
     </Grid>
 </UserControl>

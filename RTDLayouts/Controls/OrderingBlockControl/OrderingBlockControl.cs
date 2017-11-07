@@ -57,6 +57,11 @@ namespace RTDLayouts.Controls
                 this,
                 Block.Type == OrderingBlockType.Delivery ? "DeliveryState" : "PickupState",
                 true);
+
+            VisualStateManager.GoToState(
+                this,
+                UseApproveStyle ? "ApproveState" : "OrderingState",
+                true);
         }
 
         public OrderingBlock Block
@@ -67,5 +72,14 @@ namespace RTDLayouts.Controls
 
         public static readonly DependencyProperty BlockProperty =
             DependencyProperty.Register("Block", typeof(OrderingBlock), typeof(OrderingBlockControl), new PropertyMetadata(default(OrderingBlock)));
+
+        public bool UseApproveStyle
+        {
+            get => (bool)GetValue(UseApproveStyleProperty);
+            set => SetValue(UseApproveStyleProperty, value);
+        }
+
+        public static readonly DependencyProperty UseApproveStyleProperty =
+            DependencyProperty.Register("UseApproveStyle", typeof(bool), typeof(OrderingBlockControl), new PropertyMetadata(false));
     }
 }

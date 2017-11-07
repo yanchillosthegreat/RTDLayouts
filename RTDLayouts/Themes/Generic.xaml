@@ -15,6 +15,7 @@
     
     <FontFamily x:Key="MvideoFontRegular">Assets/Fonts/M.Video_regular.otf#M.Video</FontFamily>
     <FontFamily x:Key="MvideoFontBold">Assets/Fonts/M.Video_bold.otf#M.Video</FontFamily>
+    <FontFamily x:Key="MvideoFontLight">Assets/Fonts/M.Video_light.otf#M.Video</FontFamily>
 
     <converters:DateTimeFormatToWord x:Key="DateTimeFormatToWord"/>
     <converters:PriceFormatter x:Key="PriceFormatter"/>

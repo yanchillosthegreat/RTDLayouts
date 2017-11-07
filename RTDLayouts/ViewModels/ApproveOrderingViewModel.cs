@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,66 +8,12 @@ using RTDLayouts.Models;
 
 namespace RTDLayouts.ViewModels
 {
-    public class OrderingViewModel : BaseViewModel
+    public class ApproveOrderingViewModel : BaseViewModel
     {
-        private bool _lockCheckBoxesBindingUpdating;
-
-        private int _totalProductsCount;
-        public int TotalProductsCount
-        {
-            get => _totalProductsCount;
-            set => Set(ref _totalProductsCount, value);
-        }
-
-        private int _readyForExecutionProductsCount;
-        public int ReadyForExecutionProductsCount
-        {
-            get => _readyForExecutionProductsCount;
-            set => Set(ref _readyForExecutionProductsCount, value);
-        }
-
-        private int _totalPrice;
-        public int TotalPrice
-        {
-            get => _totalPrice;
-            set => Set(ref _totalPrice, value);
-        }
-
-        private int _deliveryPrice;
-        public int DeliveryPrice
-        {
-            get => _deliveryPrice;
-            set => Set(ref _deliveryPrice, value);
-        }
-
         public ObservableCollection<OrderingProduct> Products { get; }
-
-        public ObservableCollection<OrderingProduct> SelectedProducts { get; }
-
         public ObservableCollection<OrderingBlock> Blocks { get; }
 
-        private bool _selectAllProductsCheckBoxSelected;
-        public bool SelectAllProductsCheckBoxSelected
-        {
-            get => _selectAllProductsCheckBoxSelected;
-            set => Set(ref _selectAllProductsCheckBoxSelected, value);
-        }
-
-        private bool _deliveryButtonIsActive;
-        public bool DeliveryButtonIsActive
-        {
-            get => _deliveryButtonIsActive;
-            set => Set(ref _deliveryButtonIsActive, value);
-        }
-
-        private bool _pickupButtonIsActive;
-        public bool PickupButtonIsActive
-        {
-            get => _pickupButtonIsActive;
-            set => Set(ref _pickupButtonIsActive, value);
-        }
-
-        public OrderingViewModel()
+        public ApproveOrderingViewModel()
         {
             Products = new ObservableCollection<OrderingProduct>
             {
@@ -169,66 +114,6 @@ namespace RTDLayouts.ViewModels
                     Type = OrderingBlockType.Pickup
                 }
             };
-
-            SelectedProducts = new ObservableCollection<OrderingProduct>();
-            TotalProductsCount = Products.Count;
-            TotalPrice = Products.Sum(x => x.TotalPrice);
-
-            Products.ToList().ForEach(x => x.PropertyChanged += OnProductPropertyChanged);
-        }
-        
-        private void OnProductPropertyChanged(object sender, PropertyChangedEventArgs args)
-        {
-            if (args.PropertyName == nameof(OrderingProduct.IsSelected))
-            {
-                if (!(sender is OrderingProduct product)) return;
-
-                _lockCheckBoxesBindingUpdating = true;
-
-                if (product.IsSelected)
-                {
-                    SelectedProducts.Add(product);
-                    if (Products.All(x => x.IsSelected))
-                    {
-                        SelectAllProductsCheckBoxSelected = true;
-                    }
-                }
-                else
-                {
-                    SelectedProducts.Remove(product);
-                    SelectAllProductsCheckBoxSelected = false;
-                }
-
-                _lockCheckBoxesBindingUpdating = false;
-
-                CheckButtonsAvailability();
-            }
-        }
-
-        public void SelectAllProducts()
-        {
-            if (_lockCheckBoxesBindingUpdating) return;
-
-            Products.ToList().ForEach(x => x.IsSelected = true);
-        }
-
-        public void UnselectAllProducts()
-        {
-            if (_lockCheckBoxesBindingUpdating) return;
-
-            Products.ToList().ForEach(x => x.IsSelected = false);
-        }
-
-        private void CheckButtonsAvailability()
-        {
-            if (SelectedProducts.Count == 0)
-            {
-                DeliveryButtonIsActive = PickupButtonIsActive = false;
-            }
-            else
-            {
-                DeliveryButtonIsActive = PickupButtonIsActive = true;
-            }
         }
     }
 }
