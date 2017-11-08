@@ -15,15 +15,9 @@ using Windows.UI.Xaml.Shapes;
 
 namespace RTDLayouts.Controls
 {
-    public enum BarPosition
+    public partial class StepsBarButton : Button
     {
-        First,
-        Between,
-        Last
-    }
-
-    public sealed class StepsBarButton : Button
-    {
+        private const int ArrowLength = 7;
         private Polygon _polygon;
 
         public StepsBarButton()
@@ -35,17 +29,10 @@ namespace RTDLayouts.Controls
         {
             _polygon = GetTemplateChild("Polygon") as Polygon;
 
-            IsEnabledChanged += OnIsEnabledChanged;
-
             BuildPolygon();
             UpdateState();
 
             base.OnApplyTemplate();
-        }
-
-        private void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-        {
-            UpdateState();
         }
 
         private void UpdateState()
@@ -57,7 +44,7 @@ namespace RTDLayouts.Controls
         {
             switch (Position)
             {
-                case BarPosition.First:
+                case Position.First:
                     _polygon.Points = new PointCollection
                     {
                         new Point(0, 0),
@@ -67,7 +54,7 @@ namespace RTDLayouts.Controls
                         new Point(0, Height),
                     };
                     break;
-                case BarPosition.Between:
+                case Position.Between:
                     _polygon.Points = new PointCollection
                     {
                         new Point(0, 0),
@@ -77,9 +64,9 @@ namespace RTDLayouts.Controls
                         new Point(0, Height),
                         new Point(ArrowLength, Height / 2),
                     };
-                    this.Margin = new Thickness(-(ArrowLength - 1), 0, 0, 0);
+                    Margin = new Thickness(-(ArrowLength - 1), 0, 0, 0);
                     break;
-                case BarPosition.Last:
+                case Position.Last:
                     _polygon.Points = new PointCollection
                     {
                         new Point(0, 0),
@@ -88,36 +75,9 @@ namespace RTDLayouts.Controls
                         new Point(0, Height),
                         new Point(ArrowLength, Height / 2),
                     };
-                    this.Margin = new Thickness(-(ArrowLength - 1), 0, 0, 0);
+                    Margin = new Thickness(-(ArrowLength - 1), 0, 0, 0);
                     break;
             }
         }
-
-        public int Index
-        {
-            get => (int)GetValue(IndexProperty);
-            set => SetValue(IndexProperty, value);
-        }
-
-        public static readonly DependencyProperty IndexProperty =
-            DependencyProperty.Register("Index", typeof(int), typeof(StepsBarButton), new PropertyMetadata(1));
-
-        public BarPosition Position
-        {
-            get => (BarPosition)GetValue(PositionProperty);
-            set => SetValue(PositionProperty, value);
-        }
-
-        public static readonly DependencyProperty PositionProperty =
-            DependencyProperty.Register("Position", typeof(BarPosition), typeof(StepsBarButton), new PropertyMetadata(BarPosition.First));
-
-        public double ArrowLength
-        {
-            get => (double)GetValue(ArrowLengthProperty);
-            set => SetValue(ArrowLengthProperty, value);
-        }
-
-        public static readonly DependencyProperty ArrowLengthProperty =
-            DependencyProperty.Register("ArrowLength", typeof(double), typeof(StepsBarButton), new PropertyMetadata(0));
     }
 }

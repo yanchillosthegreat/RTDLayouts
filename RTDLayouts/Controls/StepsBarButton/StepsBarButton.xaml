@@ -9,9 +9,14 @@
                 <ControlTemplate TargetType="controls:StepsBarButton">
                     <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
                         <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="IsEnable">
-                                <VisualState x:Name="Enable"/>
-                                <VisualState x:Name="Disable">
+                            <VisualStateGroup x:Name="LifeState">
+                                <VisualState x:Name="Passed">
+                                    
+                                </VisualState>
+                                <VisualState x:Name="Current">
+                                    
+                                </VisualState>
+                                <VisualState x:Name="Next">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Polygon"
                                                                        Storyboard.TargetProperty="Fill">

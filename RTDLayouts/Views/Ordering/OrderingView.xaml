@@ -163,7 +163,7 @@
                 <Button Content="Доставка" Width="120" Height="32" Margin="0,0,10,0"
                         FontSize="13" FontWeight="Bold" FontFamily="{StaticResource MvideoFontBold}"
                         Style="{StaticResource MVideoButtonStyle}" Tapped="DeliveryButtonTapped"
-                        IsEnabled="False"/> <!--IsEnabled="{x:Bind _viewModel.DeliveryButtonIsActive, Mode=OneWay}"-->
+                        IsEnabled="True"/> <!--IsEnabled="{x:Bind _viewModel.DeliveryButtonIsActive, Mode=OneWay}"-->
                 <Button Content="Самовывоз" Width="120" Height="32" Margin="0,0,20,0"
                         FontSize="13" FontWeight="Bold" FontFamily="{StaticResource MvideoFontBold}"
                         Style="{StaticResource MVideoButtonStyle}" Tapped="PickupButtonTapped"

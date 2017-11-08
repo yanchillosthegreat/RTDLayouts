@@ -4,47 +4,144 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:RTDLayouts.Controls">
     <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="ABCState">
+                <VisualState x:Name="AddressFormState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AddressFormContainer" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DateTimeContainer" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RecipientFormContainer" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <FadeInThemeAnimation TargetName="AddressFormContainer"/>
+                        <FadeOutThemeAnimation TargetName="DateTimeContainer"/>
+                        <FadeOutThemeAnimation TargetName="RecipientFormContainer"/>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="DateTimeState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AddressFormContainer" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DateTimeContainer" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RecipientFormContainer" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <FadeInThemeAnimation TargetName="DateTimeContainer"/>
+                        <FadeOutThemeAnimation TargetName="AddressFormContainer"/>
+                        <FadeOutThemeAnimation TargetName="RecipientFormContainer"/>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="RecipientFormState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AddressFormContainer" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DateTimeContainer" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RecipientFormContainer" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <FadeInThemeAnimation TargetName="RecipientFormContainer"/>
+                        <FadeOutThemeAnimation TargetName="AddressFormContainer"/>
+                        <FadeOutThemeAnimation TargetName="DateTimeContainer"/>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
-            <!---->
+            <!-- 0 - Space -->
             <RowDefinition Height="23"/>
-            <!---->
+            <!-- 0 - Space -->
             <RowDefinition Height="Auto"/>
-            <!---->
+            <!-- 0 - Space -->
             <RowDefinition Height="14"/>
-            <!---->
+            <!-- 0 - Space -->
             <RowDefinition Height="30"/>
-            <!---->
+            <!-- 0 - Space -->
             <RowDefinition Height="25"/>
-            <!---->
+            <!-- 0 - Space -->
             <RowDefinition Height="Auto"/>
-            <!---->
+            <!-- 0 - Space -->
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <!---->
+            <!-- 0 - Space -->
             <ColumnDefinition Width="24"/>
-            <!---->
+            <!-- 0 - Space -->
             <ColumnDefinition Width="*"/>
-            <!---->
+            <!-- 0 - Space -->
             <ColumnDefinition Width="26"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="Оформление доставки"
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="Оформление доставки"
                    FontSize="24" FontFamily="{StaticResource MvideoFontRegular}"/>
-            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
-                <controls:StepsBarButton Content="Адрес"
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+            <controls:StepsBarButton x:Name="FirstStep" Content="Адрес"
                                      Width="207" Height="30"
-                                     Background="Red" ArrowLength="7"
+                                     Background="Red"
                                      Index="1" Position="First"/>
-                <controls:StepsBarButton Content="Дата и время" 
-                                     Background="Red" ArrowLength="7"
-                                     Width="207" Height="30" IsEnabled="False"
+            <controls:StepsBarButton x:Name="SecondStep" Content="Дата и время" 
+                                     Background="Red"
+                                     Width="207" Height="30"
                                      Index="2" Position="Between"/>
-                <controls:StepsBarButton Content="Получатель"
-                                     Background="Red" ArrowLength="7"
-                                     Width="207" Height="30" IsEnabled="False"
+            <controls:StepsBarButton x:Name="LastStep" Content="Получатель"
+                                     Background="Red"
+                                     Width="207" Height="30"
                                      Index="3" Position="Last"/>
+        </StackPanel>
+        <Grid x:Name="AddressFormContainer" Grid.Row="5" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Отмена" Width="120" Height="32"
+                        FontSize="14" FontWeight="Bold"
+                        FontFamily="{StaticResource MvideoFontBold}"
+                        Style="{StaticResource MVideoButtonStyle}"
+                        Margin="0,0,10,0"
+                        Tapped="MoveBackwardButtonTapped"/>
+                <Button Content="Далее" Width="120" Height="32"
+                        FontSize="14" FontWeight="Bold"
+                        FontFamily="{StaticResource MvideoFontBold}"
+                        Style="{StaticResource MVideoButtonStyle}"
+                        Tapped="MoveForwardButtonTapped"/>
             </StackPanel>
-            <Grid Grid.Row="5" Grid.Column="1">
+        </Grid>
+        <Grid x:Name="DateTimeContainer" Grid.Row="5" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Назад" Width="120" Height="32"
+                        FontSize="14" FontWeight="Bold"
+                        FontFamily="{StaticResource MvideoFontBold}"
+                        Style="{StaticResource MVideoButtonStyle}"
+                        Margin="0,0,10,0"
+                        Tapped="MoveBackwardButtonTapped"/>
+                <Button Content="Далее" Width="120" Height="32"
+                        FontSize="14" FontWeight="Bold"
+                        FontFamily="{StaticResource MvideoFontBold}"
+                        Style="{StaticResource MVideoButtonStyle}"
+                        Tapped="MoveForwardButtonTapped"/>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="RecipientFormContainer" Grid.Row="5" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Назад" Width="120" Height="32"
+                        FontSize="14" FontWeight="Bold"
+                        FontFamily="{StaticResource MvideoFontBold}"
+                        Style="{StaticResource MVideoButtonStyle}"
+                        Margin="0,0,10,0"
+                        Tapped="MoveBackwardButtonTapped"/>
+                <Button Content="Готово" Width="120" Height="32"
+                        FontSize="14" FontWeight="Bold"
+                        FontFamily="{StaticResource MvideoFontBold}"
+                        Style="{StaticResource MVideoButtonStyle}"
+                        Tapped="MoveForwardButtonTapped"/>
+            </StackPanel>
+        </Grid>
+        <!--<Grid Grid.Row="5" Grid.Column="1">
                 <Rectangle Fill="#E5E5E5" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
                 <StackPanel Orientation="Horizontal">
                     <RadioButton Content="Новый адрес" Margin="0,0,40,0"
@@ -56,6 +153,6 @@
                                  FontFamily="{StaticResource MvideoFontRegular}"
                                  Style="{StaticResource RadioButtonWithArrow}"/>
                 </StackPanel>
-            </Grid>
+            </Grid>-->
     </Grid>
 </UserControl>

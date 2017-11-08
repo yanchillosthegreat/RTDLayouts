@@ -102,6 +102,8 @@
     <Compile Include="Controls\PickUpTextBox\PickUpTextBox.cs" />
     <Compile Include="Controls\RTDContentDialog\RTDContentDialog.cs" />
     <Compile Include="Controls\StepsBarButton\StepsBarButton.cs" />
+    <Compile Include="Controls\StepsBarButton\StepsBarButton.Data.cs" />
+    <Compile Include="Controls\StepsBarButton\StepsBarButton.Properties.cs" />
     <Compile Include="Controls\StoresListControl\StoresListControl.cs" />
     <Compile Include="Controls\SubmittableTextBox\SubmittableTextBox.cs" />
     <Compile Include="Controls\WarehousesListControl\WarehousesListControl.cs" />
@@ -199,9 +201,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Controls\StepsBarButton\StepsBarButton.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\SubmittableTextBox\SubmittableTextBox.xaml">
       <SubType>Designer</SubType>
@@ -259,6 +260,7 @@
       <Version>2.0.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
