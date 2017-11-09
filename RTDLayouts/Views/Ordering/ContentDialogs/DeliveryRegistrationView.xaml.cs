@@ -12,21 +12,19 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using RTDLayouts.Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace RTDLayouts.Views
 {
-    public enum Step
-    {
-        First,
-        Second,
-        Last
-    }
-
     public sealed partial class DeliveryRegistrationView : UserControl
     {
-        private Step _currentStep = Step.First;
+        private Position _currentStep = Position.First;
+        private bool _isNewAddressContainerState = true;
+
+        public Action OnCancelRequested;
+        public Action OnAcceptRequested;
 
         public DeliveryRegistrationView()
         {
@@ -34,6 +32,7 @@ namespace RTDLayouts.Views
             Loaded += (sender, args) =>
             {
                 UpdateState();
+                UpdateAddressFormContainerState();
             };
         }
 
@@ -41,19 +40,19 @@ namespace RTDLayouts.Views
         {
             switch (_currentStep)
             {
-                case Step.First:
+                case Position.First:
                     VisualStateManager.GoToState(FirstStep, "Current", true);
                     VisualStateManager.GoToState(SecondStep, "Next", true);
                     VisualStateManager.GoToState(LastStep, "Next", true);
                     VisualStateManager.GoToState(this, "AddressFormState", true);
                     break;
-                case Step.Second:
+                case Position.Second:
                     VisualStateManager.GoToState(FirstStep, "Passed", true);
                     VisualStateManager.GoToState(SecondStep, "Current", true);
                     VisualStateManager.GoToState(LastStep, "Next", true);
                     VisualStateManager.GoToState(this, "DateTimeState", true);
                     break;
-                case Step.Last:
+                case Position.Last:
                     VisualStateManager.GoToState(FirstStep, "Passed", true);
                     VisualStateManager.GoToState(SecondStep, "Passed", true);
                     VisualStateManager.GoToState(LastStep, "Current", true);
@@ -62,18 +61,23 @@ namespace RTDLayouts.Views
             }
         }
 
+        private void UpdateAddressFormContainerState()
+        {
+            VisualStateManager.GoToState(this, _isNewAddressContainerState ? "NewAddressState" : "SavedAddressesState", true);
+        }
+
         private void MoveBackwardButtonTapped(object sender, TappedRoutedEventArgs e)
         {
             switch (_currentStep)
             {
-                case Step.First:
-                    //St
+                case Position.First:
+                    OnCancelRequested?.Invoke();
                     break;
-                case Step.Second:
-                    _currentStep = Step.First;
+                case Position.Second:
+                    _currentStep = Position.First;
                     break;
-                case Step.Last:
-                    _currentStep = Step.Second;
+                case Position.Last:
+                    _currentStep = Position.Second;
                     break;
             }
             UpdateState();
@@ -83,17 +87,43 @@ namespace RTDLayouts.Views
         {
             switch (_currentStep)
             {
-                case Step.First:
-                    _currentStep = Step.Second;
+                case Position.First:
+                    _currentStep = Position.Second;
                     break;
-                case Step.Second:
-                    _currentStep = Step.Last;
+                case Position.Second:
+                    _currentStep = Position.Last;
                     break;
-                case Step.Last:
-                    //
+                case Position.Last:
+                    OnAcceptRequested?.Invoke();
                     break;
             }
             UpdateState();
+        }
+
+        private void StepsBarButtonTapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (!(sender is StepsBarButton stepsBarButton)) return;
+
+            _currentStep = stepsBarButton.Position;
+            UpdateState();
+        }
+
+        private void RadioButtonChecked(object sender, RoutedEventArgs e)
+        {
+            if (sender is RadioButton radioButton && radioButton.Tag is string tag)
+            {
+                switch (tag)
+                {
+                    case "NewAddress":
+                        _isNewAddressContainerState = true;
+                        break;
+                    case "SavedAddresses":
+                        _isNewAddressContainerState = false;
+                        break;
+                }
+            }
+
+            UpdateAddressFormContainerState();
         }
     }
 }

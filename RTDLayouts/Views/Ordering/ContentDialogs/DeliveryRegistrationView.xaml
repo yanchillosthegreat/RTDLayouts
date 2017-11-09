@@ -55,49 +55,116 @@
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>
+            <VisualStateGroup x:Name="AddressFormContainerState">
+                <VisualState x:Name="NewAddressState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SavedAddressesContainer" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NewAddressContainer" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <FadeOutThemeAnimation TargetName="SavedAddressesContainer"/>
+                        <FadeInThemeAnimation TargetName="NewAddressContainer"/>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="SavedAddressesState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SavedAddressesContainer" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NewAddressContainer" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <FadeOutThemeAnimation TargetName="NewAddressContainer"/>
+                        <FadeInThemeAnimation TargetName="SavedAddressesContainer"/>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <!-- 0 - Space -->
             <RowDefinition Height="23"/>
-            <!-- 0 - Space -->
+            <!-- 1 - Title -->
             <RowDefinition Height="Auto"/>
-            <!-- 0 - Space -->
+            <!-- 2 - Space -->
             <RowDefinition Height="14"/>
-            <!-- 0 - Space -->
+            <!-- 3 - StepsBar -->
             <RowDefinition Height="30"/>
-            <!-- 0 - Space -->
+            <!-- 4 - Space -->
             <RowDefinition Height="25"/>
-            <!-- 0 - Space -->
+            <!-- 5 - Content -->
             <RowDefinition Height="Auto"/>
-            <!-- 0 - Space -->
+            <!-- 6 - Space -->
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <!-- 0 - Space -->
             <ColumnDefinition Width="24"/>
-            <!-- 0 - Space -->
+            <!-- 1 - Content -->
             <ColumnDefinition Width="*"/>
-            <!-- 0 - Space -->
+            <!-- 2 - Space -->
             <ColumnDefinition Width="26"/>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="1" Grid.Column="1" Text="Оформление доставки"
                    FontSize="24" FontFamily="{StaticResource MvideoFontRegular}"/>
         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
             <controls:StepsBarButton x:Name="FirstStep" Content="Адрес"
-                                     Width="207" Height="30"
-                                     Background="Red"
-                                     Index="1" Position="First"/>
+                                     Width="208" Height="30"
+                                     Position="First" Index="1"
+                                     Tapped="StepsBarButtonTapped"/>
             <controls:StepsBarButton x:Name="SecondStep" Content="Дата и время" 
-                                     Background="Red"
-                                     Width="207" Height="30"
-                                     Index="2" Position="Between"/>
+                                     Width="208" Height="30"
+                                     Position="Second" Index="2"
+                                     Tapped="StepsBarButtonTapped"/>
             <controls:StepsBarButton x:Name="LastStep" Content="Получатель"
-                                     Background="Red"
-                                     Width="207" Height="30"
-                                     Index="3" Position="Last"/>
+                                     Width="208" Height="30"
+                                     Position="Last" Index="3"
+                                     Tapped="StepsBarButtonTapped"/>
         </StackPanel>
         <Grid x:Name="AddressFormContainer" Grid.Row="5" Grid.Column="1">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Grid.RowDefinitions>
+                <!-- 0 - RadioButtons -->
+                <RowDefinition Height="Auto"/>
+                <!-- 1 - Space -->
+                <RowDefinition Height="19"/>
+                <!-- 2 - Content -->
+                <RowDefinition Height="Auto"/>
+                <!-- 3 - Space -->
+                <RowDefinition Height="35"/>
+                <!-- 4 - Buttons -->
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <!-- 0 - Space -->
+                <ColumnDefinition Width="15"/>
+                <!-- 1 - Content -->
+                <ColumnDefinition Width="*"/>
+                <!-- 2 - Space -->
+                <ColumnDefinition Width="15"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+                <Rectangle Fill="#E5E5E5" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                <StackPanel Orientation="Horizontal"
+                            Margin="15,0,0,0">
+                    <RadioButton Content="Новый адрес" Margin="0,0,45,0"
+                                 FontSize="16" IsChecked="True" Checked="RadioButtonChecked"
+                                 FontFamily="{StaticResource MvideoFontRegular}"
+                                 Style="{StaticResource RadioButtonWithArrow}" Tag="NewAddress"/>
+                    <RadioButton Content="Сохраненные адреса"
+                                 FontSize="16" Checked="RadioButtonChecked"
+                                 FontFamily="{StaticResource MvideoFontRegular}"
+                                 Style="{StaticResource RadioButtonWithArrow}" Tag="SavedAddresses"/>
+                </StackPanel>
+            </Grid>
+            <Grid x:Name="NewAddressContainer" Grid.Row="2" Grid.Column="1">
+                <TextBlock Text="NewAddressContainer" FontSize="20"/>
+            </Grid>
+            <Grid x:Name="SavedAddressesContainer" Grid.Row="2" Grid.Column="1">
+                <TextBlock Text="SavedAddressesContainer" FontSize="20"/>
+            </Grid>
+            <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
+                        Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Content="Отмена" Width="120" Height="32"
                         FontSize="14" FontWeight="Bold"
                         FontFamily="{StaticResource MvideoFontBold}"
@@ -112,7 +179,16 @@
             </StackPanel>
         </Grid>
         <Grid x:Name="DateTimeContainer" Grid.Row="5" Grid.Column="1">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Grid.RowDefinitions>
+                <!-- 0 - Content -->
+                <RowDefinition Height="Auto"/>
+                <!-- 1 - Space -->
+                <RowDefinition Height="35"/>
+                <!-- 2 - Buttons -->
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="DateTimeContainer" FontSize="20"/>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Content="Назад" Width="120" Height="32"
                         FontSize="14" FontWeight="Bold"
                         FontFamily="{StaticResource MvideoFontBold}"
@@ -123,11 +199,21 @@
                         FontSize="14" FontWeight="Bold"
                         FontFamily="{StaticResource MvideoFontBold}"
                         Style="{StaticResource MVideoButtonStyle}"
+                        
                         Tapped="MoveForwardButtonTapped"/>
             </StackPanel>
         </Grid>
         <Grid x:Name="RecipientFormContainer" Grid.Row="5" Grid.Column="1">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Grid.RowDefinitions>
+                <!-- 0 - Content -->
+                <RowDefinition Height="Auto"/>
+                <!-- 1 - Space -->
+                <RowDefinition Height="35"/>
+                <!-- 2 - Buttons -->
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="RecipientFormContainer" FontSize="20"/>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Content="Назад" Width="120" Height="32"
                         FontSize="14" FontWeight="Bold"
                         FontFamily="{StaticResource MvideoFontBold}"
@@ -141,18 +227,5 @@
                         Tapped="MoveForwardButtonTapped"/>
             </StackPanel>
         </Grid>
-        <!--<Grid Grid.Row="5" Grid.Column="1">
-                <Rectangle Fill="#E5E5E5" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
-                <StackPanel Orientation="Horizontal">
-                    <RadioButton Content="Новый адрес" Margin="0,0,40,0"
-                                 FontSize="16"
-                                 FontFamily="{StaticResource MvideoFontRegular}"
-                                 Style="{StaticResource RadioButtonWithArrow}"/>
-                    <RadioButton Content="Сохраненные адреса"
-                                 FontSize="16"
-                                 FontFamily="{StaticResource MvideoFontRegular}"
-                                 Style="{StaticResource RadioButtonWithArrow}"/>
-                </StackPanel>
-            </Grid>-->
     </Grid>
 </UserControl>

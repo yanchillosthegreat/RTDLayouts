@@ -9,7 +9,7 @@ namespace RTDLayouts.Controls
     public enum Position
     {
         First,
-        Between,
+        Second,
         Last
     }
 

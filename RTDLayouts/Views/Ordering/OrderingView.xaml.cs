@@ -65,9 +65,18 @@ namespace RTDLayouts.Views
 
         private async void DeliveryButtonTapped(object sender, TappedRoutedEventArgs e)
         {
+            var deliveryRegistrationView = new DeliveryRegistrationView();
             var contentDialog = new RTDContentDialog
             {
-                Content = new DeliveryRegistrationView()
+                Content = deliveryRegistrationView
+            };
+            deliveryRegistrationView.OnCancelRequested += () =>
+            {
+                contentDialog.Hide();
+            };
+            deliveryRegistrationView.OnAcceptRequested += () =>
+            {
+                contentDialog.Hide();
             };
             await contentDialog.ShowAsync();
         }

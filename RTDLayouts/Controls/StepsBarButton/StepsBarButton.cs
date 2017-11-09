@@ -19,6 +19,7 @@ namespace RTDLayouts.Controls
     {
         private const int ArrowLength = 7;
         private Polygon _polygon;
+        private Grid _layoutRoot;
 
         public StepsBarButton()
         {
@@ -27,17 +28,28 @@ namespace RTDLayouts.Controls
 
         protected override void OnApplyTemplate()
         {
+            _layoutRoot = GetTemplateChild("LayoutRoot") as Grid;
             _polygon = GetTemplateChild("Polygon") as Polygon;
 
             BuildPolygon();
-            UpdateState();
+
+            var lifeStateGroup = VisualStateManager.GetVisualStateGroups(_layoutRoot).FirstOrDefault(x => x.Name == "LifeState");
+            if (lifeStateGroup != null)
+                lifeStateGroup.CurrentStateChanged += (sender, args) =>
+                {
+                    switch (args.NewState.Name)
+                    {
+                        case "Passed":
+                            IsEnabled = true;
+                            break;
+                        case "Current":
+                        case "Next":
+                            IsEnabled = false;
+                            break;
+                    }
+                };
 
             base.OnApplyTemplate();
-        }
-
-        private void UpdateState()
-        {
-            VisualStateManager.GoToState(this, IsEnabled ? "Enable" : "Disable", true);
         }
 
         private void BuildPolygon()
@@ -54,7 +66,7 @@ namespace RTDLayouts.Controls
                         new Point(0, Height),
                     };
                     break;
-                case Position.Between:
+                case Position.Second:
                     _polygon.Points = new PointCollection
                     {
                         new Point(0, 0),
