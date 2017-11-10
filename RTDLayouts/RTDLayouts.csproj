@@ -123,6 +123,7 @@
     <Compile Include="ViewModels\AvailabilityOnObjectsViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BindableBase.cs" />
+    <Compile Include="ViewModels\DeliveryRegistrationViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\OrderingViewModel.cs" />
     <Compile Include="ViewModels\PickupRegistrationViewModel.cs" />
@@ -158,6 +159,7 @@
     <None Include="RTDLayouts_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Icons\arrow_right.png" />
     <Content Include="Assets\Icons\arrow_up.png" />
     <Content Include="Assets\Icons\edit_icon.png" />
     <Content Include="Assets\Icons\expand_arrow.png" />
