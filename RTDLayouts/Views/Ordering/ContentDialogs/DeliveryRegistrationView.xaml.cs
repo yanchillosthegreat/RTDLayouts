@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using RTDLayouts.Controls;
+using RTDLayouts.ViewModels;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -26,9 +27,12 @@ namespace RTDLayouts.Views
         public Action OnCancelRequested;
         public Action OnAcceptRequested;
 
+        private DeliveryRegistrationViewModel _viewModel;
+
         public DeliveryRegistrationView()
         {
             this.InitializeComponent();
+            DataContext = _viewModel = new DeliveryRegistrationViewModel();
             Loaded += (sender, args) =>
             {
                 UpdateState();
@@ -124,6 +128,13 @@ namespace RTDLayouts.Views
             }
 
             UpdateAddressFormContainerState();
+        }
+
+        private async void DaDataButtonTapped(object sender, TappedRoutedEventArgs e)
+        {
+            VisualStateManager.GoToState(this, "LoadingState", true);
+            await _viewModel.DoDaData();
+            VisualStateManager.GoToState(this, "ReadyState", true);
         }
     }
 }

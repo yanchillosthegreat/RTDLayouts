@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,24 +16,12 @@ namespace RTDLayouts.Converters
             if (!(value is int price))
                 return value;
 
-            var priceString = price.ToString();
-            var revertedPriceString = Reverse(priceString);
-            var formattedRevertedPriceString = Regex.Replace(revertedPriceString, ".{3}", "$0 ");
-            var result = Reverse(formattedRevertedPriceString) + " р.";
-
-            return result;
+            return price.ToString("N0", new NumberFormatInfo { NumberGroupSeparator = " " }) + " р.";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();
-        }
-
-        public static string Reverse(string s)
-        {
-            char[] charArray = s.ToCharArray();
-            Array.Reverse(charArray);
-            return new string(charArray);
         }
     }
 }

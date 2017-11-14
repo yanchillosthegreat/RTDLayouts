@@ -81,6 +81,30 @@
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>
+            <VisualStateGroup x:Name="LoadingStateGroup">
+                <VisualState x:Name="ReadyState">
+                    <Storyboard>
+                        <FadeOutThemeAnimation TargetName="LoadingRingContainer"/>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LoadingRingContainer" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ViewsContainer" Storyboard.TargetProperty="Opacity">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="LoadingState">
+                    <Storyboard>
+                        <FadeInThemeAnimation TargetName="LoadingRingContainer"/>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LoadingRingContainer" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ViewsContainer" Storyboard.TargetProperty="Opacity">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="0.55"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <!-- 0 - Space -->
@@ -122,301 +146,343 @@
                                      Position="Last" Index="3"
                                      Tapped="StepsBarButtonTapped"/>
         </StackPanel>
-        <Grid x:Name="AddressFormContainer" Grid.Row="5" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <!-- 0 - RadioButtons -->
-                <RowDefinition Height="Auto"/>
-                <!-- 1 - Space -->
-                <RowDefinition Height="19"/>
-                <!-- 2 - Content -->
-                <RowDefinition Height="Auto"/>
-                <!-- 3 - Space -->
-                <RowDefinition Height="35"/>
-                <!-- 4 - Buttons -->
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <!-- 0 - Space -->
-                <ColumnDefinition Width="15"/>
-                <!-- 1 - Content -->
-                <ColumnDefinition Width="*"/>
-                <!-- 2 - Space -->
-                <ColumnDefinition Width="15"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
-                <Rectangle Fill="#E5E5E5" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
-                <StackPanel Orientation="Horizontal"
+        <Grid x:Name="ViewsContainer" Grid.Row="5" Grid.Column="1">
+            <Grid x:Name="AddressFormContainer">
+                <Grid.RowDefinitions>
+                    <!-- 0 - RadioButtons -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- 1 - Space -->
+                    <RowDefinition Height="19"/>
+                    <!-- 2 - Content -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- 3 - Space -->
+                    <RowDefinition Height="35"/>
+                    <!-- 4 - Buttons -->
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <!-- 0 - Space -->
+                    <ColumnDefinition Width="15"/>
+                    <!-- 1 - Content -->
+                    <ColumnDefinition Width="*"/>
+                    <!-- 2 - Space -->
+                    <ColumnDefinition Width="15"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+                    <Rectangle Fill="#E5E5E5" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                    <StackPanel Orientation="Horizontal"
                             Margin="15,0,0,0">
-                    <RadioButton Content="Новый адрес" Margin="0,0,45,0"
+                        <RadioButton Content="Новый адрес" Margin="0,0,45,0"
                                  FontSize="16" IsChecked="True" Checked="RadioButtonChecked"
                                  FontFamily="{StaticResource MvideoFontRegular}"
                                  Style="{StaticResource RadioButtonWithArrow}" Tag="NewAddress"/>
-                    <RadioButton Content="Сохраненные адреса"
+                        <RadioButton Content="Сохраненные адреса"
                                  FontSize="16" Checked="RadioButtonChecked"
                                  FontFamily="{StaticResource MvideoFontRegular}" IsEnabled="False"
                                  Style="{StaticResource RadioButtonWithArrow}" Tag="SavedAddresses"/>
-                </StackPanel>
-            </Grid>
-            <Grid x:Name="NewAddressContainer" Grid.Row="2" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <!-- 0 - Address -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- 1 - Space -->
-                    <RowDefinition Height="24"/>
-                    <!-- 2 - Second Row -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- 3 - Space -->
-                    <RowDefinition Height="19"/>
-                    <!-- 4 - Third Row -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- 5 - Space -->
-                    <RowDefinition Height="32"/>
-                    <!-- 6 - Optional Fields' Info -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- 7 - Space -->
-                    <RowDefinition Height="9"/>
-                    <!-- 8 - Optional Fields' Row -->
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="NewAddressContainer" Grid.Row="2" Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <!-- 0 - Адрес: -->
+                        <!-- 0 - Address -->
                         <RowDefinition Height="Auto"/>
                         <!-- 1 - Space -->
-                        <RowDefinition Height="6"/>
-                        <!-- 2 - TextBox & Submit Button -->
-                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="24"/>
+                        <!-- 2 - Second Row -->
+                        <RowDefinition Height="Auto"/>
                         <!-- 3 - Space -->
-                        <RowDefinition Height="6"/>
-                        <!-- 4 - Введите адрес в свободной форме и заполните пустые поля ниже -->
+                        <RowDefinition Height="19"/>
+                        <!-- 4 - Third Row -->
+                        <RowDefinition Height="Auto"/>
+                        <!-- 5 - Space -->
+                        <RowDefinition Height="32"/>
+                        <!-- 6 - Optional Fields' Info -->
+                        <RowDefinition Height="Auto"/>
+                        <!-- 7 - Space -->
+                        <RowDefinition Height="9"/>
+                        <!-- 8 - Optional Fields' Row -->
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="Адрес:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                    <StackPanel Grid.Row="2" Orientation="Horizontal">
-                        <TextBox Width="540" PlaceholderText="мск тверская  6 с 61 4" Margin="0,0,10,0"
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <!-- 0 - Адрес: -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- 1 - Space -->
+                            <RowDefinition Height="6"/>
+                            <!-- 2 - TextBox & Submit Button -->
+                            <RowDefinition Height="32"/>
+                            <!-- 3 - Space -->
+                            <RowDefinition Height="6"/>
+                            <!-- 4 - Введите адрес в свободной форме и заполните пустые поля ниже -->
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Адрес:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal">
+                            <TextBox Width="540" PlaceholderText="мск тверская  6 с 61 4" Margin="0,0,10,0"
                                  FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                 Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"/>
-                        <!--<Rectangle Fill="Red" Width="32" Height="32"/>-->
-                        <Grid Width="32" Height="32" Background="Red">
-                            <Image Source="/Assets/Icons/arrow_right.png"
+                                 Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
+                                 Text="{Binding FullAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Button Width="32" Height="32"
+                                FontSize="14" FontWeight="Bold"
+                                FontFamily="{StaticResource MvideoFontBold}"
+                                Style="{StaticResource MVideoButtonStyle}"
+                                Tapped="DaDataButtonTapped"
+                                Background="Red">
+                                <Image Source="/Assets/Icons/arrow_right.png"
                                    HorizontalAlignment="Center" VerticalAlignment="Center"
                                    Width="14" Height="8"/>
-                        </Grid>
-                    </StackPanel>
-                    <TextBlock Grid.Row="4" Text="Введите адрес в свободной форме и заполните пустые поля ниже"
+                            </Button>
+                        </StackPanel>
+                        <TextBlock Grid.Row="4" Text="Введите адрес в свободной форме и заполните пустые поля ниже"
                                FontSize="13" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#949494"/>
-                </Grid>
-                <Grid Grid.Row="2">
-                    <StackPanel Orientation="Horizontal">
-                        <Grid Margin="0,0,10,0">
-                            <Grid.RowDefinitions>
-                                <!-- 0 - Индекс: -->
-                                <RowDefinition Height="Auto"/>
-                                <!-- 1 - Space -->
-                                <RowDefinition Height="6"/>
-                                <!-- 2 - TextBox -->
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Индекс:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                            <TextBox Grid.Row="2" Width="90" PlaceholderText="123456" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"/>
-                        </Grid>
-                        <Grid Margin="0,0,10,0">
-                            <Grid.RowDefinitions>
-                                <!-- 0 - Регион: -->
-                                <RowDefinition Height="Auto"/>
-                                <!-- 1 - Space -->
-                                <RowDefinition Height="6"/>
-                                <!-- 2 - TextBox -->
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Регион:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                            <TextBox Grid.Row="2" Width="236" PlaceholderText="Камчатский край" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"/>
-                        </Grid>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <!-- 0 - Район: -->
-                                <RowDefinition Height="Auto"/>
-                                <!-- 1 - Space -->
-                                <RowDefinition Height="6"/>
-                                <!-- 2 - TextBox -->
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Район:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                            <TextBox Grid.Row="2" Width="236" PlaceholderText="Елизовский" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"/>
-                        </Grid>
-                    </StackPanel>
-                </Grid>
-                <Grid Grid.Row="4">
-                    <StackPanel Orientation="Horizontal">
-                        <Grid Margin="0,0,10,0">
-                            <Grid.RowDefinitions>
-                                <!-- 0 - Населенный пункт: -->
-                                <RowDefinition Height="Auto"/>
-                                <!-- 1 - Space -->
-                                <RowDefinition Height="6"/>
-                                <!-- 2 - TextBox -->
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Населенный пункт:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                            <TextBox Grid.Row="2" Width="236" PlaceholderText="Петропаловск-Камчатский" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"/>
-                        </Grid>
-                        <Grid Margin="0,0,10,0">
-                            <Grid.RowDefinitions>
-                                <!-- 0 - Улица: -->
-                                <RowDefinition Height="Auto"/>
-                                <!-- 1 - Space -->
-                                <RowDefinition Height="6"/>
-                                <!-- 2 - TextBox -->
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Улица:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                            <TextBox Grid.Row="2" Width="236" PlaceholderText="Дальневосточная" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"/>
-                        </Grid>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <!-- 0 - Дом: -->
-                                <RowDefinition Height="Auto"/>
-                                <!-- 1 - Space -->
-                                <RowDefinition Height="6"/>
-                                <!-- 2 - TextBox -->
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Дом:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                            <TextBox Grid.Row="2" Width="90" PlaceholderText="26 к. 3" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"/>
-                        </Grid>
-                    </StackPanel>
-                </Grid>
-                <TextBlock Grid.Row="6" Text="Необязательные поля. Заполните их, если покупатель сообщил вам эти данные."
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <StackPanel Orientation="Horizontal">
+                            <Grid Margin="0,0,10,0">
+                                <Grid.RowDefinitions>
+                                    <!-- 0 - Индекс: -->
+                                    <RowDefinition Height="Auto"/>
+                                    <!-- 1 - Space -->
+                                    <RowDefinition Height="6"/>
+                                    <!-- 2 - TextBox -->
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Индекс:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
+                                <TextBox Grid.Row="2" Width="90" PlaceholderText="123456" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
+                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
+                                     Text="{Binding Index, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                            <Grid Margin="0,0,10,0">
+                                <Grid.RowDefinitions>
+                                    <!-- 0 - Регион: -->
+                                    <RowDefinition Height="Auto"/>
+                                    <!-- 1 - Space -->
+                                    <RowDefinition Height="6"/>
+                                    <!-- 2 - TextBox -->
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Регион:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
+                                <TextBox Grid.Row="2" Width="236" PlaceholderText="Камчатский край" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
+                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
+                                     Text="{Binding Region, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <!-- 0 - Район: -->
+                                    <RowDefinition Height="Auto"/>
+                                    <!-- 1 - Space -->
+                                    <RowDefinition Height="6"/>
+                                    <!-- 2 - TextBox -->
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Район:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
+                                <TextBox Grid.Row="2" Width="236" PlaceholderText="Елизовский" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
+                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
+                                     Text="{Binding Disctrict, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="4">
+                        <StackPanel Orientation="Horizontal">
+                            <Grid Margin="0,0,10,0">
+                                <Grid.RowDefinitions>
+                                    <!-- 0 - Населенный пункт: -->
+                                    <RowDefinition Height="Auto"/>
+                                    <!-- 1 - Space -->
+                                    <RowDefinition Height="6"/>
+                                    <!-- 2 - TextBox -->
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Населенный пункт:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
+                                <TextBox Grid.Row="2" Width="236" PlaceholderText="Петропаловск-Камчатский" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
+                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
+                                     Text="{Binding City, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                            <Grid Margin="0,0,10,0">
+                                <Grid.RowDefinitions>
+                                    <!-- 0 - Улица: -->
+                                    <RowDefinition Height="Auto"/>
+                                    <!-- 1 - Space -->
+                                    <RowDefinition Height="6"/>
+                                    <!-- 2 - TextBox -->
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Улица:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
+                                <TextBox Grid.Row="2" Width="236" PlaceholderText="Дальневосточная" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
+                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
+                                     Text="{Binding Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <!-- 0 - Дом: -->
+                                    <RowDefinition Height="Auto"/>
+                                    <!-- 1 - Space -->
+                                    <RowDefinition Height="6"/>
+                                    <!-- 2 - TextBox -->
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Дом:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
+                                <TextBox Grid.Row="2" Width="90" PlaceholderText="26 к. 3" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
+                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
+                                     Text="{Binding House, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                    <TextBlock Grid.Row="6" Text="Необязательные поля. Заполните их, если покупатель сообщил вам эти данные."
                            FontSize="13" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#949494"/>
-                <StackPanel Grid.Row="8" Orientation="Horizontal">
-                    <Grid Margin="0,0,10,0">
-                        <Grid.RowDefinitions>
-                            <!-- 0 - Квартира: -->
-                            <RowDefinition Height="Auto"/>
-                            <!-- 1 - Space -->
-                            <RowDefinition Height="6"/>
-                            <!-- 2 - TextBox -->
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Text="Квартира:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                        <TextBox Grid.Row="2" Width="72" PlaceholderText="123" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                 Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"/>
-                    </Grid>
-                    <Grid Margin="0,0,10,0">
-                        <Grid.RowDefinitions>
-                            <!-- 0 - Подъезд: -->
-                            <RowDefinition Height="Auto"/>
-                            <!-- 1 - Space -->
-                            <RowDefinition Height="6"/>
-                            <!-- 2 - TextBox -->
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Text="Подъезд:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                        <TextBox Grid.Row="2" Width="72" PlaceholderText="12" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                 Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"/>
-                    </Grid>
-                    <Grid Margin="0,0,10,0">
-                        <Grid.RowDefinitions>
-                            <!-- 0 - Этаж: -->
-                            <RowDefinition Height="Auto"/>
-                            <!-- 1 - Space -->
-                            <RowDefinition Height="6"/>
-                            <!-- 2 - TextBox -->
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Text="Этаж:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                        <TextBox Grid.Row="2" Width="72" PlaceholderText="25" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                 Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"/>
-                    </Grid>
-                    <Grid Margin="0,0,20,0">
-                        <Grid.RowDefinitions>
-                            <!-- 0 - Код дмфн: -->
-                            <RowDefinition Height="Auto"/>
-                            <!-- 1 - Space -->
-                            <RowDefinition Height="6"/>
-                            <!-- 2 - TextBox -->
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Text="Код дмфн:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                        <TextBox Grid.Row="2" Width="82" PlaceholderText="23674534" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                 Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"/>
-                    </Grid>
-                    <CheckBox Content="Лифт есть" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Foreground="#696969"
-                              FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Margin="0,0,0,6"/>
+                    <StackPanel Grid.Row="8" Orientation="Horizontal">
+                        <Grid Margin="0,0,10,0">
+                            <Grid.RowDefinitions>
+                                <!-- 0 - Квартира: -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- 1 - Space -->
+                                <RowDefinition Height="6"/>
+                                <!-- 2 - TextBox -->
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="Квартира:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
+                            <TextBox Grid.Row="2" Width="72" PlaceholderText="123" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
+                                 Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
+                                 Text="{Binding Flat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </Grid>
+                        <Grid Margin="0,0,10,0">
+                            <Grid.RowDefinitions>
+                                <!-- 0 - Подъезд: -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- 1 - Space -->
+                                <RowDefinition Height="6"/>
+                                <!-- 2 - TextBox -->
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="Подъезд:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
+                            <TextBox Grid.Row="2" Width="72" PlaceholderText="12" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
+                                 Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
+                                 Text="{Binding Entrance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </Grid>
+                        <Grid Margin="0,0,10,0">
+                            <Grid.RowDefinitions>
+                                <!-- 0 - Этаж: -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- 1 - Space -->
+                                <RowDefinition Height="6"/>
+                                <!-- 2 - TextBox -->
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="Этаж:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
+                            <TextBox Grid.Row="2" Width="72" PlaceholderText="25" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
+                                 Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
+                                 Text="{Binding Floor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </Grid>
+                        <Grid Margin="0,0,20,0">
+                            <Grid.RowDefinitions>
+                                <!-- 0 - Код дмфн: -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- 1 - Space -->
+                                <RowDefinition Height="6"/>
+                                <!-- 2 - TextBox -->
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="Код дмфн:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
+                            <TextBox Grid.Row="2" Width="82" PlaceholderText="23674534" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
+                                 Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
+                                 Text="{Binding Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </Grid>
+                        <CheckBox Content="Лифт есть" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Foreground="#696969"
+                              FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Margin="0,0,0,6"
+                              IsChecked="{x:Bind _viewModel.HasElevator, Mode=TwoWay}"/>
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="SavedAddressesContainer" Grid.Row="2" Grid.Column="1">
+                    <TextBlock Text="SavedAddressesContainer" FontSize="20"/>
+                </Grid>
+                <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
+                        Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Отмена" Width="120" Height="32"
+                        FontSize="14" FontWeight="Bold"
+                        FontFamily="{StaticResource MvideoFontBold}"
+                        Style="{StaticResource MVideoButtonStyle}"
+                        Margin="0,0,10,0"
+                        Tapped="MoveBackwardButtonTapped"/>
+                    <Button Content="Далее" Width="120" Height="32"
+                        FontSize="14" FontWeight="Bold"
+                        FontFamily="{StaticResource MvideoFontBold}"
+                        Style="{StaticResource MVideoButtonStyle}"
+                        Tapped="MoveForwardButtonTapped"
+                        Background="Red"
+                        IsEnabled="{x:Bind _viewModel.CanGoToDateTimeView, Mode=OneWay}"/>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="SavedAddressesContainer" Grid.Row="2" Grid.Column="1">
-                <TextBlock Text="SavedAddressesContainer" FontSize="20"/>
+            <Grid x:Name="DateTimeContainer">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="21"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <!-- 0 - Space -->
+                    <ColumnDefinition Width="15"/>
+                    <!-- 1 - Content -->
+                    <ColumnDefinition Width="*"/>
+                    <!-- 2 - Space -->
+                    <ColumnDefinition Width="15"/>
+                </Grid.ColumnDefinitions>
+                <CalendarDatePicker Grid.Column="1" x:Name="CalendarDatePicker" Width="246" Margin="0,0,20,0"><!--Date="{x:Bind _viewModel.SelectedDate, Mode=TwoWay}"-->
+                    <CalendarDatePicker.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Foreground="#696969"
+                                       Text="Выберите дату:" 
+                                       FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"/>
+                        </DataTemplate>
+                    </CalendarDatePicker.HeaderTemplate>
+                </CalendarDatePicker>
+                <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Назад" Width="120" Height="32"
+                        FontSize="14" FontWeight="Bold"
+                        FontFamily="{StaticResource MvideoFontBold}"
+                        Style="{StaticResource MVideoButtonStyle}"
+                        Margin="0,0,10,0"
+                        Tapped="MoveBackwardButtonTapped"/>
+                    <Button Content="Далее" Width="120" Height="32"
+                        FontSize="14" FontWeight="Bold"
+                        FontFamily="{StaticResource MvideoFontBold}"
+                        Style="{StaticResource MVideoButtonStyle}"
+                        Tapped="MoveForwardButtonTapped"
+                        Background="Red"/>
+                </StackPanel>
             </Grid>
-            <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
-                        Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="Отмена" Width="120" Height="32"
+            <Grid x:Name="RecipientFormContainer">
+                <Grid.RowDefinitions>
+                    <!-- 0 - Content -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- 1 - Space -->
+                    <RowDefinition Height="35"/>
+                    <!-- 2 - Buttons -->
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="RecipientFormContainer" FontSize="20"/>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Назад" Width="120" Height="32"
                         FontSize="14" FontWeight="Bold"
                         FontFamily="{StaticResource MvideoFontBold}"
                         Style="{StaticResource MVideoButtonStyle}"
                         Margin="0,0,10,0"
                         Tapped="MoveBackwardButtonTapped"/>
-                <Button Content="Далее" Width="120" Height="32"
+                    <Button Content="Готово" Width="120" Height="32"
                         FontSize="14" FontWeight="Bold"
                         FontFamily="{StaticResource MvideoFontBold}"
                         Style="{StaticResource MVideoButtonStyle}"
                         Tapped="MoveForwardButtonTapped"/>
-            </StackPanel>
+                </StackPanel>
+            </Grid>
         </Grid>
-        <Grid x:Name="DateTimeContainer" Grid.Row="5" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <!-- 0 - Content -->
-                <RowDefinition Height="Auto"/>
-                <!-- 1 - Space -->
-                <RowDefinition Height="35"/>
-                <!-- 2 - Buttons -->
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="DateTimeContainer" FontSize="20"/>
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="Назад" Width="120" Height="32"
-                        FontSize="14" FontWeight="Bold"
-                        FontFamily="{StaticResource MvideoFontBold}"
-                        Style="{StaticResource MVideoButtonStyle}"
-                        Margin="0,0,10,0"
-                        Tapped="MoveBackwardButtonTapped"/>
-                <Button Content="Далее" Width="120" Height="32"
-                        FontSize="14" FontWeight="Bold"
-                        FontFamily="{StaticResource MvideoFontBold}"
-                        Style="{StaticResource MVideoButtonStyle}"
-                        
-                        Tapped="MoveForwardButtonTapped"/>
-            </StackPanel>
-        </Grid>
-        <Grid x:Name="RecipientFormContainer" Grid.Row="5" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <!-- 0 - Content -->
-                <RowDefinition Height="Auto"/>
-                <!-- 1 - Space -->
-                <RowDefinition Height="35"/>
-                <!-- 2 - Buttons -->
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="RecipientFormContainer" FontSize="20"/>
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="Назад" Width="120" Height="32"
-                        FontSize="14" FontWeight="Bold"
-                        FontFamily="{StaticResource MvideoFontBold}"
-                        Style="{StaticResource MVideoButtonStyle}"
-                        Margin="0,0,10,0"
-                        Tapped="MoveBackwardButtonTapped"/>
-                <Button Content="Готово" Width="120" Height="32"
-                        FontSize="14" FontWeight="Bold"
-                        FontFamily="{StaticResource MvideoFontBold}"
-                        Style="{StaticResource MVideoButtonStyle}"
-                        Tapped="MoveForwardButtonTapped"/>
-            </StackPanel>
+        <Grid x:Name="LoadingRingContainer"
+              Grid.Row="5" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"
+              Visibility="Collapsed" Background="Transparent">
+            <ProgressRing Width="125" Height="125" Foreground="Red" IsActive="True"/>
         </Grid>
     </Grid>
 </UserControl>
