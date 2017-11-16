@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.Web.Syndication;
 using Newtonsoft.Json.Bson;
+using RTDLayouts.Models;
 
 namespace RTDLayouts.ViewModels
 {
@@ -123,11 +126,25 @@ namespace RTDLayouts.ViewModels
             set => Set(ref _hasElevator, value);
         }
 
-        public async Task DoDaData()
+        private DeliveryQuotum _deliveryQuotum;
+        public DeliveryQuotum DeliveryQuotum
         {
-            if (string.IsNullOrEmpty(FullAddress)) return;
-            await Task.Delay(2000);
-            ApplyMockDaData();
+            get => _deliveryQuotum;
+            set => Set(ref _deliveryQuotum, value);
+        }
+
+        private DateTimeOffset _selectedQuotumDate;
+        public DateTimeOffset SelectedQuotumDate
+        {
+            get => _selectedQuotumDate;
+            set => Set(ref _selectedQuotumDate, value);
+        }
+
+        private bool _areDatesLoading = true;
+        public bool AreDatesLoading
+        {
+            get => _areDatesLoading;
+            set => Set(ref _areDatesLoading, value);
         }
 
         public bool CanGoToDateTimeView =>
@@ -136,9 +153,17 @@ namespace RTDLayouts.ViewModels
             !string.IsNullOrEmpty(City) && !string.IsNullOrEmpty(Street) &&
             !string.IsNullOrEmpty(House);
 
+        private ObservableCollection<DateTime> _enabledDates;
+        public ObservableCollection<DateTime> EnabledDates
+        {
+            get => _enabledDates;
+            set => Set(ref _enabledDates, value);
+        }
+
         public DeliveryRegistrationViewModel()
         {
-            
+            SelectedQuotumDate = DateTimeOffset.Now.Date;
+            EnabledDates = new ObservableCollection<DateTime>();
         }
 
         private void ApplyMockDaData()
@@ -155,6 +180,43 @@ namespace RTDLayouts.ViewModels
             Floor = "25";
             Code = "23674534";
             HasElevator = true;
+        }
+
+        public async Task DoDaData()
+        {
+            if (string.IsNullOrEmpty(FullAddress)) return;
+            await Task.Delay(500);
+            ApplyMockDaData();
+        }
+
+        public async Task GetDates()
+        {
+            AreDatesLoading = true;
+            await Task.Delay(500);
+            EnabledDates = new ObservableCollection<DateTime> { DateTime.Today.AddDays(1), DateTime.Today.AddDays(3) };
+            AreDatesLoading = false;
+        }
+
+        public async Task LoadQoutums()
+        {
+            if (SelectedQuotumDate.DateTime == DateTimeOffset.Now.Date)
+            {
+                DeliveryQuotum = null;
+                return;
+            }
+
+            await Task.Delay(1000);
+
+            DeliveryQuotum = new DeliveryQuotum { DateTime = SelectedQuotumDate.Date };
+            DeliveryQuotum.DateTimeQuotums.Add(new DateTimeQuotum { DeliveryCost = 800, LoverValue = 12, UpperValue = 14 });
+            DeliveryQuotum.DateTimeQuotums.Add(new DateTimeQuotum { DeliveryCost = 800, LoverValue = 14, UpperValue = 16 });
+            DeliveryQuotum.DateTimeQuotums.Add(new DateTimeQuotum { DeliveryCost = 800, LoverValue = 16, UpperValue = 18 });
+            DeliveryQuotum.DateTimeQuotums.Add(new DateTimeQuotum { DeliveryCost = 800, LoverValue = 19, UpperValue = 22 });
+            DeliveryQuotum.DateTimeQuotums.Add(new DateTimeQuotum { DeliveryCost = 390, LoverValue = 10, UpperValue = 16 });
+            DeliveryQuotum.DateTimeQuotums.Add(new DateTimeQuotum { DeliveryCost = 390, LoverValue = 10, UpperValue = 21 });
+            DeliveryQuotum.DateTimeQuotums.Add(new DateTimeQuotum { DeliveryCost = 390, LoverValue = 10, UpperValue = 22 });
+            DeliveryQuotum.DateTimeQuotums.Add(new DateTimeQuotum { DeliveryCost = 390, LoverValue = 11, UpperValue = 21 });
+            DeliveryQuotum.DateTimeQuotums.Add(new DateTimeQuotum { DeliveryCost = 390, LoverValue = 11, UpperValue = 23 });
         }
     }
 }

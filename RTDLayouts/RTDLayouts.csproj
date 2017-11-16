@@ -100,7 +100,13 @@
     <Compile Include="Controls\OrderingBlockControl\OrderingBlockControl.cs" />
     <Compile Include="Controls\OrderingProductControl\OrderingProductControl.cs" />
     <Compile Include="Controls\PickUpTextBox\PickUpTextBox.cs" />
+    <Compile Include="Controls\RTDCalendarDatePicker\RTDCalendarDatePicker.cs" />
+    <Compile Include="Controls\RTDCalendarDatePicker\RTDCalendarDatePicker.Properties.cs" />
+    <Compile Include="Controls\RTDCalendarView\RTDCalendarView.cs" />
+    <Compile Include="Controls\RTDCalendarView\RTDCalendarView.Properties.cs" />
     <Compile Include="Controls\RTDContentDialog\RTDContentDialog.cs" />
+    <Compile Include="Controls\RTDRadioButton\RTDRadioButton.cs" />
+    <Compile Include="Controls\RTDRadioButton\RTDRadioButtonGroup.cs" />
     <Compile Include="Controls\StepsBarButton\StepsBarButton.cs" />
     <Compile Include="Controls\StepsBarButton\StepsBarButton.Data.cs" />
     <Compile Include="Controls\StepsBarButton\StepsBarButton.Properties.cs" />
@@ -108,10 +114,13 @@
     <Compile Include="Controls\SubmittableTextBox\SubmittableTextBox.cs" />
     <Compile Include="Controls\WarehousesListControl\WarehousesListControl.cs" />
     <Compile Include="Converters\DateTimeFormatToWord.cs" />
+    <Compile Include="Converters\DateTimeQuotumFormatter.cs" />
+    <Compile Include="Converters\GettingFirstPartFromStringConverter.cs" />
     <Compile Include="Converters\PriceFormatter.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\DateTimeQuotum.cs" />
     <Compile Include="Models\OrderingBlock.cs" />
     <Compile Include="Models\OrderingProduct.cs" />
     <Compile Include="Models\OrderingService.cs" />
@@ -194,6 +203,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Controls\PickUpTextBox\PickUpTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Controls\RTDCalendarDatePicker\RTDCalendarDatePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Controls\RTDCalendarView\RTDCalendarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

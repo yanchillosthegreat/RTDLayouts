@@ -23,6 +23,7 @@ namespace RTDLayouts.Views
     {
         private Position _currentStep = Position.First;
         private bool _isNewAddressContainerState = true;
+        private ItemsWrapGrid _itemsWrapGrid;
 
         public Action OnCancelRequested;
         public Action OnAcceptRequested;
@@ -31,16 +32,37 @@ namespace RTDLayouts.Views
 
         public DeliveryRegistrationView()
         {
-            this.InitializeComponent();
             DataContext = _viewModel = new DeliveryRegistrationViewModel();
+
+            this.InitializeComponent();
             Loaded += (sender, args) =>
             {
                 UpdateState();
                 UpdateAddressFormContainerState();
             };
+
+            QuotumsItemsControl.Loaded += OnQuotumsItemsControlLoaded;
         }
 
-        private void UpdateState()
+        private void OnQuotumsItemsControlLoaded(object o, RoutedEventArgs routedEventArgs)
+        {
+            if (QuotumsItemsControl.Items == null) return;
+
+            QuotumsItemsControl.Items.VectorChanged += OnItemsVectorChanged;
+
+            _itemsWrapGrid = FindName("ItemsWrapGrid") as ItemsWrapGrid;
+            if (_itemsWrapGrid == null) return;
+            _itemsWrapGrid.MaximumRowsOrColumns = QuotumsItemsControl.Items.Count / 2 + QuotumsItemsControl.Items.Count % 2;
+        }
+
+        private void OnItemsVectorChanged(IObservableVector<object> sender, IVectorChangedEventArgs vectorChangedEventArgs)
+        {
+            if (QuotumsItemsControl.Items == null || _itemsWrapGrid == null) return;
+
+            _itemsWrapGrid.MaximumRowsOrColumns = QuotumsItemsControl.Items.Count / 2 + QuotumsItemsControl.Items.Count % 2;
+        }
+
+        private async void UpdateState()
         {
             switch (_currentStep)
             {
@@ -55,6 +77,7 @@ namespace RTDLayouts.Views
                     VisualStateManager.GoToState(SecondStep, "Current", true);
                     VisualStateManager.GoToState(LastStep, "Next", true);
                     VisualStateManager.GoToState(this, "DateTimeState", true);
+                    await _viewModel.GetDates();
                     break;
                 case Position.Last:
                     VisualStateManager.GoToState(FirstStep, "Passed", true);
@@ -134,6 +157,13 @@ namespace RTDLayouts.Views
         {
             VisualStateManager.GoToState(this, "LoadingState", true);
             await _viewModel.DoDaData();
+            VisualStateManager.GoToState(this, "ReadyState", true);
+        }
+
+        private async void OnCalendarDatePickerDateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
+        {
+            VisualStateManager.GoToState(this, "LoadingState", true);
+            await _viewModel.LoadQoutums();
             VisualStateManager.GoToState(this, "ReadyState", true);
         }
     }
