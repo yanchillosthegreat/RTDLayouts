@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using RTDLayouts.Controls;
+using RTDLayouts.Models;
 using RTDLayouts.ViewModels;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -39,9 +40,15 @@ namespace RTDLayouts.Views
             {
                 UpdateState();
                 UpdateAddressFormContainerState();
+                UpdateDateTimeFormContainerState();
             };
 
             QuotumsItemsControl.Loaded += OnQuotumsItemsControlLoaded;
+        }
+
+        private void UpdateDateTimeFormContainerState()
+        {
+            VisualStateManager.GoToState(this, "QuotumsCollapsedState", true);
         }
 
         private void OnQuotumsItemsControlLoaded(object o, RoutedEventArgs routedEventArgs)
@@ -153,6 +160,14 @@ namespace RTDLayouts.Views
             UpdateAddressFormContainerState();
         }
 
+        private void QuotaRadioButtonChecked(object sender, RoutedEventArgs e)
+        {
+            if (sender is RTDRadioButton radioButton && radioButton.Tag is Quota quota)
+            {
+                _viewModel.SelectedQuota = quota;
+            }
+        }
+
         private async void DaDataButtonTapped(object sender, TappedRoutedEventArgs e)
         {
             VisualStateManager.GoToState(this, "LoadingState", true);
@@ -160,11 +175,14 @@ namespace RTDLayouts.Views
             VisualStateManager.GoToState(this, "ReadyState", true);
         }
 
-        private async void OnCalendarDatePickerDateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
+        private async void OnCalendarDatePickerClosed(object sender, object e)
         {
             VisualStateManager.GoToState(this, "LoadingState", true);
             await _viewModel.LoadQoutums();
             VisualStateManager.GoToState(this, "ReadyState", true);
+
+            VisualStateManager.GoToState(this,
+                _viewModel.SelectedQuotumDate == null ? "QuotumsCollapsedState" : "QuotumsVisibleState", true);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace RTDLayouts.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (!(value is DateTimeQuotum quotum)) return value;
+            if (!(value is Quota quotum)) return value;
 
             return string.Format("с {0}:00 до {1}:00       {2}", quotum.LoverValue, quotum.UpperValue,
                 quotum.DeliveryCost.ToString("N0", new NumberFormatInfo { NumberGroupSeparator = " " }) + " р.");

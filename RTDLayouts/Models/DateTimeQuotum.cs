@@ -7,20 +7,26 @@ using System.Threading.Tasks;
 
 namespace RTDLayouts.Models
 {
-    public class DateTimeQuotum
+    public class Quota
     {
+        public Quota(int id)
+        {
+            this.Id = id;
+        }
+
+        public int Id { get; set; }
         public int DeliveryCost { get; set; }
         public int LoverValue { get; set; }
         public int UpperValue { get; set; }
     }
 
-    public class DeliveryQuotum
+    public class DeliveryQuotasEntity
     {
-        public DateTime DateTime { get; set; }
-        public ObservableCollection<DateTimeQuotum> DateTimeQuotums { get; set; }
-        public DeliveryQuotum()
+        public DateTime? DateTime { get; set; }
+        public ObservableCollection<Quota> Quotas { get; set; }
+        public DeliveryQuotasEntity()
         {
-            DateTimeQuotums = new ObservableCollection<DateTimeQuotum>();
+            Quotas = new ObservableCollection<Quota>();
         }
     }
 }

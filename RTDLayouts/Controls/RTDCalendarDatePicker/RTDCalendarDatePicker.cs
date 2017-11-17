@@ -75,8 +75,6 @@ namespace RTDLayouts.Controls
             {
                 _calendarView.EnableDates = EnableDates;
             }
-
-            Date = EnableDates?.FirstOrDefault();
         }
     }
 }

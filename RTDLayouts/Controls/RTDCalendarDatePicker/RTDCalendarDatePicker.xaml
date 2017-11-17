@@ -146,7 +146,7 @@
                         </FlyoutBase.AttachedFlyout>
                         <ContentPresenter x:Name="HeaderContentPresenter"
                           x:DeferLoadStrategy="Lazy"
-                          Visibility="Collapsed"
+                          Visibility="Collapsed" Margin="0,0,0,5"
                           Content="{TemplateBinding Header}"
                           ContentTemplate="{TemplateBinding HeaderTemplate}" />
                         <Border x:Name="Background"

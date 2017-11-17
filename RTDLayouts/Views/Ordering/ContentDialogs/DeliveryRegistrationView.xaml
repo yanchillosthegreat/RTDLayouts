@@ -4,14 +4,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:RTDLayouts.Controls"
     xmlns:models="using:RTDLayouts.Models"
-    xmlns:converters="using:RTDLayouts.Converters">
+    xmlns:converters="using:RTDLayouts.Converters"
+    x:Name="RootLayout">
     <UserControl.Resources>
         <converters:DateTimeQuotumFormatter x:Key="DateTimeQuotumFormatter"/>
-        <controls:RTDRadioButtonGroup x:Key="QuotumsRTDRadioButtonGroup"/>
+        <controls:RTDRadioButtonGroup x:Key="RTDRadioButtonGroup" SelectFirstAddedRadioButton="False"/>
     </UserControl.Resources>
     <Grid>
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="ABCState">
+            <VisualStateGroup x:Name="ViewStates">
                 <VisualState x:Name="AddressFormState">
                     <Storyboard>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AddressFormContainer" Storyboard.TargetProperty="Visibility">
@@ -84,6 +85,32 @@
                         </ObjectAnimationUsingKeyFrames>
                         <FadeOutThemeAnimation TargetName="NewAddressContainer"/>
                         <FadeInThemeAnimation TargetName="SavedAddressesContainer"/>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="DateTimeFormContainerStates">
+                <VisualState x:Name="QuotumsVisibleState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ChooseQuotaLabel" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="QuotumsItemsControl" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <FadeInThemeAnimation TargetName="ChooseQuotaLabel"/>
+                        <FadeInThemeAnimation TargetName="QuotumsItemsControl"/>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="QuotumsCollapsedState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ChooseQuotaLabel" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="QuotumsItemsControl" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <FadeOutThemeAnimation TargetName="ChooseQuotaLabel"/>
+                        <FadeOutThemeAnimation TargetName="QuotumsItemsControl"/>
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>
@@ -422,17 +449,11 @@
                 <Grid.RowDefinitions>
                     <!-- 0 - CalendarDatePicker -->
                     <RowDefinition Height="Auto"/>
-                    <!-- 1 - Space -->
-                    <RowDefinition Height="25"/>
-                    <!-- 2 - Выберите промежуток времени -->
+                    <!-- 1 - Выберите промежуток времени -->
                     <RowDefinition Height="Auto"/>
-                    <!-- 3 - Space -->
-                    <RowDefinition Height="21"/>
-                    <!-- 4 - RadioButtons -->
+                    <!-- 2 - RadioButtons -->
                     <RowDefinition Height="Auto"/>
-                    <!-- 5 - Space -->
-                    <RowDefinition Height="35"/>
-                    <!-- 6 - Buttons -->
+                    <!-- 3 - Buttons -->
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -445,10 +466,11 @@
                 </Grid.ColumnDefinitions>
                 <controls:RTDCalendarDatePicker x:Name="CalendarDatePicker" Grid.Column="1"
                                     Width="246" Margin="0,0,20,0"
-                                    DateChanged="OnCalendarDatePickerDateChanged"
-                                                EnableDates="{Binding EnabledDates, Mode=OneWay}"
+                                    EnableDates="{Binding EnabledDates, Mode=OneWay}"
                                     IsLoading="{x:Bind _viewModel.AreDatesLoading, Mode=OneWay}"
-                                    Date="{Binding SelectedQuotumDate, Mode=TwoWay}"><!--Date="{x:Bind _viewModel.SelectedQuotumDate, Mode=TwoWay}"-->
+                                    Date="{x:Bind _viewModel.SelectedQuotumDate, Mode=TwoWay}"
+                                                Closed="OnCalendarDatePickerClosed">
+                    <!--Date="{x:Bind _viewModel.SelectedQuotumDate, Mode=TwoWay}"-->
                     <controls:RTDCalendarDatePicker.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Foreground="#696969"
@@ -457,17 +479,20 @@
                         </DataTemplate>
                     </controls:RTDCalendarDatePicker.HeaderTemplate>
                 </controls:RTDCalendarDatePicker>
-                <TextBlock Grid.Row="2" Grid.Column="1" Text="Выберите промежуток времени:"
-                           FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                <ItemsControl x:Name="QuotumsItemsControl" Grid.Row="4" Grid.Column="1"
-                              ItemsSource="{x:Bind _viewModel.DeliveryQuotum.DateTimeQuotums, Mode=OneWay}"
+                <TextBlock x:Name="ChooseQuotaLabel" Grid.Row="1" Grid.Column="1" Text="Выберите промежуток времени:"
+                           FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"
+                           Visibility="Collapsed" Margin="0,25,0,21"/>
+                <ItemsControl x:Name="QuotumsItemsControl" Grid.Row="2" Grid.Column="1"
+                              ItemsSource="{x:Bind _viewModel.DeliveryQuotum.Quotas, Mode=OneWay}"
                               Background="Red" HorizontalAlignment="Left"
-                              Width="505">
+                              Width="505" Margin="0,0,0,20" Visibility="Collapsed">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="models:DateTimeQuotum">
+                        <DataTemplate x:DataType="models:Quota">
                             <Grid Width="214" Margin="0,0,77,0">
                                 <controls:RTDRadioButton GroupName="QuotumsGroup" Style="{StaticResource RadioButtonWithArrow}"
-                                                         Group="{StaticResource QuotumsRTDRadioButtonGroup}" Height="40">
+                                                         Group="{StaticResource RTDRadioButtonGroup}"
+                                                         Height="40" Tag="{x:Bind Mode=OneWay}"
+                                                         Checked="QuotaRadioButtonChecked">
                                     <controls:RTDRadioButton.Content>
                                         <TextBlock Text="{x:Bind Mode=OneWay, Converter={StaticResource DateTimeQuotumFormatter}}"/>
                                     </controls:RTDRadioButton.Content>
@@ -481,7 +506,8 @@
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
-                <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
+                <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right"
+                            Margin="0,15,0,0">
                     <Button Content="Назад" Width="120" Height="32"
                         FontSize="14" FontWeight="Bold"
                         FontFamily="{StaticResource MvideoFontBold}"
@@ -493,7 +519,8 @@
                         FontFamily="{StaticResource MvideoFontBold}"
                         Style="{StaticResource MVideoButtonStyle}"
                         Tapped="MoveForwardButtonTapped"
-                        Background="Red"/>
+                        Background="Red"
+                            IsEnabled="{x:Bind _viewModel.CanGoToRecipientView, Mode=OneWay}"/>
                 </StackPanel>
             </Grid>
             <Grid x:Name="RecipientFormContainer">

@@ -10,7 +10,7 @@ namespace RTDLayouts.Controls
     public class RTDRadioButtonGroup
     {
         private List<RTDRadioButton> _radioButtons;
-        public event EventHandler<RTDRadioButton> SelectionChanged;
+        public bool SelectFirstAddedRadioButton { get; set; }
 
         public RTDRadioButtonGroup()
         {
@@ -21,13 +21,7 @@ namespace RTDLayouts.Controls
         {
             _radioButtons.Add(radioButton);
             radioButton.IsEnabledChanged += OnRadioButtonIsEnabledChanged;
-            radioButton.Checked += OnRadioButtonChecked;
             UpdateState();
-        }
-
-        private void OnRadioButtonChecked(object sender, RoutedEventArgs routedEventArgs)
-        {
-            //throw new NotImplementedException();
         }
 
         private void OnRadioButtonIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs args)
@@ -44,7 +38,7 @@ namespace RTDLayouts.Controls
 
             if (_radioButtons.FirstOrDefault(x => x.IsEnabled) is RTDRadioButton firstRadioButton)
             {
-                firstRadioButton.IsChecked = true;
+                firstRadioButton.IsChecked = SelectFirstAddedRadioButton;
             }
         }
     }
