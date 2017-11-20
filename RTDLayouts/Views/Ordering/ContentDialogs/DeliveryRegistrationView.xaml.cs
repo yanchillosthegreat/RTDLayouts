@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using RTDLayouts.Common;
 using RTDLayouts.Controls;
 using RTDLayouts.Models;
 using RTDLayouts.ViewModels;
@@ -55,11 +56,11 @@ namespace RTDLayouts.Views
         {
             if (QuotumsItemsControl.Items == null) return;
 
-            QuotumsItemsControl.Items.VectorChanged += OnItemsVectorChanged;
-
-            _itemsWrapGrid = FindName("ItemsWrapGrid") as ItemsWrapGrid;
-            if (_itemsWrapGrid == null) return;
+            if (!(QuotumsItemsControl.ItemsPanelRoot is ItemsWrapGrid)) return;
+            _itemsWrapGrid = (ItemsWrapGrid) QuotumsItemsControl.ItemsPanelRoot;
             _itemsWrapGrid.MaximumRowsOrColumns = QuotumsItemsControl.Items.Count / 2 + QuotumsItemsControl.Items.Count % 2;
+
+            QuotumsItemsControl.Items.VectorChanged += OnItemsVectorChanged;
         }
 
         private void OnItemsVectorChanged(IObservableVector<object> sender, IVectorChangedEventArgs vectorChangedEventArgs)

@@ -485,7 +485,7 @@
                 <ItemsControl x:Name="QuotumsItemsControl" Grid.Row="2" Grid.Column="1"
                               ItemsSource="{x:Bind _viewModel.DeliveryQuotum.Quotas, Mode=OneWay}"
                               Background="Red" HorizontalAlignment="Left"
-                              Width="505" Margin="0,0,0,20" Visibility="Collapsed">
+                              Width="505" Margin="0,0,0,20">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="models:Quota">
                             <Grid Width="214" Margin="0,0,77,0">
@@ -502,7 +502,7 @@
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <ItemsWrapGrid x:Name="ItemsWrapGrid" Orientation="Vertical" MaximumRowsOrColumns="6"/>
+                            <ItemsWrapGrid Orientation="Vertical"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
@@ -532,7 +532,75 @@
                     <!-- 2 - Buttons -->
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="RecipientFormContainer" FontSize="20"/>
+
+
+
+
+
+
+
+
+
+
+
+                <TextBlock Grid.Row="2" FontSize="18" FontFamily="{StaticResource MvideoFontRegular}" Text="Укажите данные о получателе"/>
+                <TextBlock Grid.Row="4" FontFamily="{StaticResource MvideoFontRegular}" FontSize="13" Foreground="#949494">
+                <Run Text="Все поля, отмеченные знаком «"/>
+                <Run Text="*" FontSize="16" Foreground="#9F0012"/>
+                <Run Text="», обязательны к заполнению"/>
+                </TextBlock>
+                <Grid Grid.Row="6" Height="213">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="57.5"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                        <controls:PickUpTextBox PlaceholderText="Иванов" Header="Фамилия" IsNecessarily="True"
+                                            FontSize="16" FieldType="Surname"
+                                            RegexPattern="^[а-яА-ЯёЁa-zA-Z]{2,40}$"
+                                            IsValid="{x:Bind _viewModel.IsNameValid, Mode=TwoWay}"/>
+                        <controls:PickUpTextBox PlaceholderText="Константин" Header="Имя" IsNecessarily="True"
+                                            FontSize="16" FieldType="Name"
+                                            RegexPattern="^[а-яА-ЯёЁa-zA-Z]{2,40}$"
+                                            IsValid="{x:Bind _viewModel.IsSurnameValid, Mode=TwoWay}"/>
+                        <controls:PickUpTextBox PlaceholderText="Константинович" Header="Отчество" IsNecessarily="False"
+                                            FontSize="16" FieldType="Patronym"
+                                            RegexPattern="^[а-яА-ЯёЁa-zA-Z]{2,40}$"
+                                            IsValid="{x:Bind _viewModel.IsPatronymValid, Mode=TwoWay}"/>
+                    </StackPanel>
+                    <Rectangle Grid.Column="1" Fill="#DADADA" Width="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,5,0,0"/>
+                    <StackPanel Grid.Column="2" Orientation="Vertical">
+                        <controls:PickUpTextBox PlaceholderText="8 956 476 89 67" Header="Телефон" IsNecessarily="True"
+                                            FontSize="16" FieldType="Phone"
+                                            RegexPattern="^8 \d{3}\ \d{3}\ \d{2}\ \d{2}$"
+                                            IsValid="{x:Bind _viewModel.IsPhoneValid, Mode=TwoWay}"/>
+                        <controls:PickUpTextBox PlaceholderText="example@email.ru" Header="Email" IsNecessarily="False"
+                                            FontSize="16" FieldType="Email"
+                                            RegexPattern="^(['\w'\.'\-]+)@([\w\-]+)((\.(\w){2,4})+)$"
+                                            IsValid="{x:Bind _viewModel.IsEmailValid, Mode=TwoWay}"/>
+                        <controls:PickUpTextBox PlaceholderText="8 956 476 89 67" Header="Дополнительный телефон" IsNecessarily="False"
+                                            FontSize="16" FieldType="Phone"
+                                            RegexPattern="^8 \d{3}\ \d{3}\ \d{2}\ \d{2}$"
+                                            IsValid="{x:Bind _viewModel.IsSecondPhoneValid, Mode=TwoWay}"/>
+                    </StackPanel>
+                </Grid>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Content="Назад" Width="120" Height="32"
                         FontSize="14" FontWeight="Bold"
