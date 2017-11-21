@@ -1,8 +1,81 @@
 ﻿<UserControl
     x:Class="RTDLayouts.Views.DeliveryRecipientView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:RTDLayouts.Controls">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <!-- 0 - Info -->
+            <RowDefinition Height="Auto"/>
+            <!-- 1 - Space -->
+            <RowDefinition Height="9"/>
+            <!-- 2 - Fields -->
+            <RowDefinition Height="Auto"/>
+            <!-- 3 - Space -->
+            <RowDefinition Height="35"/>
+            <!-- 4 - Buttons -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="15"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="{StaticResource MvideoFontRegular}" FontSize="13" Foreground="#949494">
+                    <Run Text="Все поля, отмеченные знаком «"/>
+                    <Run Text="*" FontSize="16" Foreground="#9F0012"/>
+                    <Run Text="», обязательны к заполнению"/>
+        </TextBlock>
+        <Grid Grid.Row="2" Grid.Column="1" Height="213">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="57.5"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+                <controls:PickUpTextBox PlaceholderText="Иванов" Header="Фамилия" IsNecessarily="True"
+                                            FontSize="16" FieldType="Surname"
+                                            RegexPattern="^[а-яА-ЯёЁa-zA-Z]{2,40}$"
+                                            IsValid="{x:Bind ViewModel.IsNameValid, Mode=TwoWay}"/>
+                <controls:PickUpTextBox PlaceholderText="Константин" Header="Имя" IsNecessarily="True"
+                                            FontSize="16" FieldType="Name"
+                                            RegexPattern="^[а-яА-ЯёЁa-zA-Z]{2,40}$"
+                                            IsValid="{x:Bind ViewModel.IsSurnameValid, Mode=TwoWay}"/>
+                <controls:PickUpTextBox PlaceholderText="Константинович" Header="Отчество" IsNecessarily="False"
+                                            FontSize="16" FieldType="Patronym"
+                                            RegexPattern="^[а-яА-ЯёЁa-zA-Z]{2,40}$"
+                                            IsValid="{x:Bind ViewModel.IsPatronymValid, Mode=TwoWay}"/>
+            </StackPanel>
+            <Rectangle Grid.Column="1" Fill="#DADADA" Width="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,2,0,7"/>
+            <StackPanel Grid.Column="2" Orientation="Vertical">
+                <controls:PickUpTextBox PlaceholderText="8 956 476 89 67" Header="Телефон" IsNecessarily="True"
+                                            FontSize="16" FieldType="Phone"
+                                            RegexPattern="^8 \d{3}\ \d{3}\ \d{2}\ \d{2}$"
+                                            IsValid="{x:Bind ViewModel.IsPhoneValid, Mode=TwoWay}"/>
+                <controls:PickUpTextBox PlaceholderText="example@email.ru" Header="Email" IsNecessarily="False"
+                                            FontSize="16" FieldType="Email"
+                                            RegexPattern="^(['\w'\.'\-]+)@([\w\-]+)((\.(\w){2,4})+)$"
+                                            IsValid="{x:Bind ViewModel.IsEmailValid, Mode=TwoWay}"/>
+                <controls:PickUpTextBox PlaceholderText="8 956 476 89 67" Header="Дополнительный телефон" IsNecessarily="False"
+                                            FontSize="16" FieldType="Phone"
+                                            RegexPattern="^8 \d{3}\ \d{3}\ \d{2}\ \d{2}$"
+                                            IsValid="{x:Bind ViewModel.IsSecondPhoneValid, Mode=TwoWay}"/>
+            </StackPanel>
+        </Grid>
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Назад" Width="120" Height="32"
+                        FontSize="14" FontWeight="Bold"
+                        FontFamily="{StaticResource MvideoFontBold}"
+                        Style="{StaticResource MVideoButtonStyle}"
+                        Margin="0,0,10,0"
+                        Tapped="OnBackwardButtonTapped"/>
+            <Button Content="Готово" Width="120" Height="32"
+                        FontSize="14" FontWeight="Bold"
+                            Background="Red"
+                        FontFamily="{StaticResource MvideoFontBold}"
+                        Style="{StaticResource MVideoButtonStyle}"
+                        Tapped="OnFinishButtonTapped"
+                        IsEnabled="{x:Bind ViewModel.IsViewValid, Mode=OneWay}"/>
+        </StackPanel>
     </Grid>
 </UserControl>

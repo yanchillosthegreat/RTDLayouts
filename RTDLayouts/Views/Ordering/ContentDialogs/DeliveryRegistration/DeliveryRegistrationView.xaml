@@ -4,136 +4,57 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:RTDLayouts.Controls"
     xmlns:models="using:RTDLayouts.Models"
-    xmlns:converters="using:RTDLayouts.Converters">
-    <UserControl.Resources>
-        <converters:DateTimeQuotumFormatter x:Key="DateTimeQuotumFormatter"/>
-        <controls:RTDRadioButtonGroup x:Key="RTDRadioButtonGroup" SelectFirstAddedRadioButton="False"/>
-    </UserControl.Resources>
+    xmlns:converters="using:RTDLayouts.Converters"
+    xmlns:views="using:RTDLayouts.Views">
     <Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="ViewStates">
-                <VisualState x:Name="AddressFormState">
+                <VisualState x:Name="AddressState">
                     <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AddressFormContainer" Storyboard.TargetProperty="Visibility">
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeliveryAddressView" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DateTimeContainer" Storyboard.TargetProperty="Visibility">
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeliveryDateTimeView" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RecipientFormContainer" Storyboard.TargetProperty="Visibility">
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeliveryRecipientView" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <FadeInThemeAnimation TargetName="AddressFormContainer"/>
-                        <FadeOutThemeAnimation TargetName="DateTimeContainer"/>
-                        <FadeOutThemeAnimation TargetName="RecipientFormContainer"/>
+                        <FadeInThemeAnimation TargetName="DeliveryAddressView"/>
+                        <FadeOutThemeAnimation TargetName="DeliveryDateTimeView"/>
+                        <FadeOutThemeAnimation TargetName="DeliveryRecipientView"/>
                     </Storyboard>
                 </VisualState>
                 <VisualState x:Name="DateTimeState">
                     <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AddressFormContainer" Storyboard.TargetProperty="Visibility">
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeliveryAddressView" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DateTimeContainer" Storyboard.TargetProperty="Visibility">
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeliveryDateTimeView" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RecipientFormContainer" Storyboard.TargetProperty="Visibility">
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeliveryRecipientView" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <FadeInThemeAnimation TargetName="DateTimeContainer"/>
-                        <FadeOutThemeAnimation TargetName="AddressFormContainer"/>
-                        <FadeOutThemeAnimation TargetName="RecipientFormContainer"/>
+                        <FadeInThemeAnimation TargetName="DeliveryDateTimeView"/>
+                        <FadeOutThemeAnimation TargetName="DeliveryAddressView"/>
+                        <FadeOutThemeAnimation TargetName="DeliveryRecipientView"/>
                     </Storyboard>
                 </VisualState>
                 <VisualState x:Name="RecipientFormState">
                     <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AddressFormContainer" Storyboard.TargetProperty="Visibility">
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeliveryAddressView" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DateTimeContainer" Storyboard.TargetProperty="Visibility">
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeliveryDateTimeView" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RecipientFormContainer" Storyboard.TargetProperty="Visibility">
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeliveryRecipientView" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <FadeInThemeAnimation TargetName="RecipientFormContainer"/>
-                        <FadeOutThemeAnimation TargetName="AddressFormContainer"/>
-                        <FadeOutThemeAnimation TargetName="DateTimeContainer"/>
-                    </Storyboard>
-                </VisualState>
-            </VisualStateGroup>
-            <VisualStateGroup x:Name="AddressFormContainerState">
-                <VisualState x:Name="NewAddressState">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SavedAddressesContainer" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NewAddressContainer" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <FadeOutThemeAnimation TargetName="SavedAddressesContainer"/>
-                        <FadeInThemeAnimation TargetName="NewAddressContainer"/>
-                    </Storyboard>
-                </VisualState>
-                <VisualState x:Name="SavedAddressesState">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SavedAddressesContainer" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NewAddressContainer" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <FadeOutThemeAnimation TargetName="NewAddressContainer"/>
-                        <FadeInThemeAnimation TargetName="SavedAddressesContainer"/>
-                    </Storyboard>
-                </VisualState>
-            </VisualStateGroup>
-            <VisualStateGroup x:Name="DateTimeFormContainerStates">
-                <VisualState x:Name="QuotumsVisibleState">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ChooseQuotaLabel" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="QuotumsItemsControl" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <FadeInThemeAnimation TargetName="ChooseQuotaLabel"/>
-                        <FadeInThemeAnimation TargetName="QuotumsItemsControl"/>
-                    </Storyboard>
-                </VisualState>
-                <VisualState x:Name="QuotumsCollapsedState">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ChooseQuotaLabel" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="QuotumsItemsControl" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <FadeOutThemeAnimation TargetName="ChooseQuotaLabel"/>
-                        <FadeOutThemeAnimation TargetName="QuotumsItemsControl"/>
-                    </Storyboard>
-                </VisualState>
-            </VisualStateGroup>
-            <VisualStateGroup x:Name="LoadingStateGroup">
-                <VisualState x:Name="ReadyState">
-                    <Storyboard>
-                        <FadeOutThemeAnimation TargetName="LoadingRingContainer"/>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LoadingRingContainer" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="Collapsed"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ViewsContainer" Storyboard.TargetProperty="Opacity">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
-                <VisualState x:Name="LoadingState">
-                    <Storyboard>
-                        <FadeInThemeAnimation TargetName="LoadingRingContainer"/>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LoadingRingContainer" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ViewsContainer" Storyboard.TargetProperty="Opacity">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="0.55"/>
-                        </ObjectAnimationUsingKeyFrames>
+                        <FadeInThemeAnimation TargetName="DeliveryRecipientView"/>
+                        <FadeOutThemeAnimation TargetName="DeliveryAddressView"/>
+                        <FadeOutThemeAnimation TargetName="DeliveryDateTimeView"/>
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>
@@ -178,429 +99,19 @@
                                      Position="Last" Index="3"
                                      Tapped="StepsBarButtonTapped"/>
         </StackPanel>
-        <Grid x:Name="ViewsContainer" Grid.Row="5" Grid.Column="1">
-            <Grid x:Name="AddressFormContainer">
-                <Grid.RowDefinitions>
-                    <!-- 0 - RadioButtons -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- 1 - Space -->
-                    <RowDefinition Height="19"/>
-                    <!-- 2 - Content -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- 3 - Space -->
-                    <RowDefinition Height="35"/>
-                    <!-- 4 - Buttons -->
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <!-- 0 - Space -->
-                    <ColumnDefinition Width="15"/>
-                    <!-- 1 - Content -->
-                    <ColumnDefinition Width="*"/>
-                    <!-- 2 - Space -->
-                    <ColumnDefinition Width="15"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
-                    <Rectangle Fill="#E5E5E5" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
-                    <StackPanel Orientation="Horizontal"
-                            Margin="15,0,0,0">
-                        <RadioButton Content="Новый адрес" Margin="0,0,45,0"
-                                 FontSize="16" IsChecked="True" Checked="RadioButtonChecked"
-                                 FontFamily="{StaticResource MvideoFontRegular}"
-                                 Style="{StaticResource RadioButtonWithArrow}" Tag="NewAddress"/>
-                        <RadioButton Content="Сохраненные адреса"
-                                 FontSize="16" Checked="RadioButtonChecked"
-                                 FontFamily="{StaticResource MvideoFontRegular}" IsEnabled="False"
-                                 Style="{StaticResource RadioButtonWithArrow}" Tag="SavedAddresses"/>
-                    </StackPanel>
-                </Grid>
-                <Grid x:Name="NewAddressContainer" Grid.Row="2" Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <!-- 0 - Address -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- 1 - Space -->
-                        <RowDefinition Height="24"/>
-                        <!-- 2 - Second Row -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- 3 - Space -->
-                        <RowDefinition Height="19"/>
-                        <!-- 4 - Third Row -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- 5 - Space -->
-                        <RowDefinition Height="32"/>
-                        <!-- 6 - Optional Fields' Info -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- 7 - Space -->
-                        <RowDefinition Height="9"/>
-                        <!-- 8 - Optional Fields' Row -->
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <Grid.RowDefinitions>
-                            <!-- 0 - Адрес: -->
-                            <RowDefinition Height="Auto"/>
-                            <!-- 1 - Space -->
-                            <RowDefinition Height="6"/>
-                            <!-- 2 - TextBox & Submit Button -->
-                            <RowDefinition Height="32"/>
-                            <!-- 3 - Space -->
-                            <RowDefinition Height="6"/>
-                            <!-- 4 - Введите адрес в свободной форме и заполните пустые поля ниже -->
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Text="Адрес:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                        <StackPanel Grid.Row="2" Orientation="Horizontal">
-                            <TextBox Width="540" PlaceholderText="мск тверская  6 с 61 4" Margin="0,0,10,0"
-                                 FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                 Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
-                                 Text="{Binding DeliveryAddressViewModel.FullAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <Button Width="32" Height="32"
-                                FontSize="14" FontWeight="Bold"
-                                FontFamily="{StaticResource MvideoFontBold}"
-                                Style="{StaticResource MVideoButtonStyle}"
-                                Tapped="DaDataButtonTapped"
-                                Background="Red">
-                                <Image Source="/Assets/Icons/arrow_right.png"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   Width="14" Height="8"/>
-                            </Button>
-                        </StackPanel>
-                        <TextBlock Grid.Row="4" Text="Введите адрес в свободной форме и заполните пустые поля ниже"
-                               FontSize="13" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#949494"/>
-                    </Grid>
-                    <Grid Grid.Row="2">
-                        <StackPanel Orientation="Horizontal">
-                            <Grid Margin="0,0,10,0">
-                                <Grid.RowDefinitions>
-                                    <!-- 0 - Индекс: -->
-                                    <RowDefinition Height="Auto"/>
-                                    <!-- 1 - Space -->
-                                    <RowDefinition Height="6"/>
-                                    <!-- 2 - TextBox -->
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="Индекс:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                                <TextBox Grid.Row="2" Width="90" PlaceholderText="123456" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
-                                     Text="{Binding DeliveryAddressViewModel.Index, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            </Grid>
-                            <Grid Margin="0,0,10,0">
-                                <Grid.RowDefinitions>
-                                    <!-- 0 - Регион: -->
-                                    <RowDefinition Height="Auto"/>
-                                    <!-- 1 - Space -->
-                                    <RowDefinition Height="6"/>
-                                    <!-- 2 - TextBox -->
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="Регион:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                                <TextBox Grid.Row="2" Width="236" PlaceholderText="Камчатский край" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
-                                     Text="{Binding DeliveryAddressViewModel.Region, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            </Grid>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <!-- 0 - Район: -->
-                                    <RowDefinition Height="Auto"/>
-                                    <!-- 1 - Space -->
-                                    <RowDefinition Height="6"/>
-                                    <!-- 2 - TextBox -->
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="Район:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                                <TextBox Grid.Row="2" Width="236" PlaceholderText="Елизовский" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
-                                     Text="{Binding DeliveryAddressViewModel.Disctrict, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            </Grid>
-                        </StackPanel>
-                    </Grid>
-                    <Grid Grid.Row="4">
-                        <StackPanel Orientation="Horizontal">
-                            <Grid Margin="0,0,10,0">
-                                <Grid.RowDefinitions>
-                                    <!-- 0 - Населенный пункт: -->
-                                    <RowDefinition Height="Auto"/>
-                                    <!-- 1 - Space -->
-                                    <RowDefinition Height="6"/>
-                                    <!-- 2 - TextBox -->
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="Населенный пункт:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                                <TextBox Grid.Row="2" Width="236" PlaceholderText="Петропаловск-Камчатский" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
-                                     Text="{Binding DeliveryAddressViewModel.City, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            </Grid>
-                            <Grid Margin="0,0,10,0">
-                                <Grid.RowDefinitions>
-                                    <!-- 0 - Улица: -->
-                                    <RowDefinition Height="Auto"/>
-                                    <!-- 1 - Space -->
-                                    <RowDefinition Height="6"/>
-                                    <!-- 2 - TextBox -->
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="Улица:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                                <TextBox Grid.Row="2" Width="236" PlaceholderText="Дальневосточная" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
-                                     Text="{Binding DeliveryAddressViewModel.Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            </Grid>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <!-- 0 - Дом: -->
-                                    <RowDefinition Height="Auto"/>
-                                    <!-- 1 - Space -->
-                                    <RowDefinition Height="6"/>
-                                    <!-- 2 - TextBox -->
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="Дом:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                                <TextBox Grid.Row="2" Width="90" PlaceholderText="26 к. 3" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                     Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
-                                     Text="{Binding DeliveryAddressViewModel.House, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            </Grid>
-                        </StackPanel>
-                    </Grid>
-                    <TextBlock Grid.Row="6" Text="Необязательные поля. Заполните их, если покупатель сообщил вам эти данные."
-                           FontSize="13" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#949494"/>
-                    <StackPanel Grid.Row="8" Orientation="Horizontal">
-                        <Grid Margin="0,0,10,0">
-                            <Grid.RowDefinitions>
-                                <!-- 0 - Квартира: -->
-                                <RowDefinition Height="Auto"/>
-                                <!-- 1 - Space -->
-                                <RowDefinition Height="6"/>
-                                <!-- 2 - TextBox -->
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Квартира:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                            <TextBox Grid.Row="2" Width="72" PlaceholderText="123" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                 Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
-                                 Text="{Binding DeliveryAddressViewModel.Flat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </Grid>
-                        <Grid Margin="0,0,10,0">
-                            <Grid.RowDefinitions>
-                                <!-- 0 - Подъезд: -->
-                                <RowDefinition Height="Auto"/>
-                                <!-- 1 - Space -->
-                                <RowDefinition Height="6"/>
-                                <!-- 2 - TextBox -->
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Подъезд:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                            <TextBox Grid.Row="2" Width="72" PlaceholderText="12" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                 Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
-                                 Text="{Binding DeliveryAddressViewModel.Entrance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </Grid>
-                        <Grid Margin="0,0,10,0">
-                            <Grid.RowDefinitions>
-                                <!-- 0 - Этаж: -->
-                                <RowDefinition Height="Auto"/>
-                                <!-- 1 - Space -->
-                                <RowDefinition Height="6"/>
-                                <!-- 2 - TextBox -->
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Этаж:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                            <TextBox Grid.Row="2" Width="72" PlaceholderText="25" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                 Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
-                                 Text="{Binding DeliveryAddressViewModel.Floor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </Grid>
-                        <Grid Margin="0,0,20,0">
-                            <Grid.RowDefinitions>
-                                <!-- 0 - Код дмфн: -->
-                                <RowDefinition Height="Auto"/>
-                                <!-- 1 - Space -->
-                                <RowDefinition Height="6"/>
-                                <!-- 2 - TextBox -->
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Код дмфн:" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"/>
-                            <TextBox Grid.Row="2" Width="82" PlaceholderText="23674534" FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"
-                                 Style="{StaticResource TextBoxWithGrayPlaceholderStyle}"
-                                 Text="{Binding DeliveryAddressViewModel.Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </Grid>
-                        <CheckBox Content="Лифт есть" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Foreground="#696969"
-                              FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Margin="0,0,0,6"
-                              IsChecked="{x:Bind _viewModel.DeliveryAddressViewModel.HasElevator, Mode=TwoWay}"/>
-                    </StackPanel>
-                </Grid>
-                <Grid x:Name="SavedAddressesContainer" Grid.Row="2" Grid.Column="1">
-                    <TextBlock Text="SavedAddressesContainer" FontSize="20"/>
-                </Grid>
-                <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
-                        Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Content="Отмена" Width="120" Height="32"
-                        FontSize="14" FontWeight="Bold"
-                        FontFamily="{StaticResource MvideoFontBold}"
-                        Style="{StaticResource MVideoButtonStyle}"
-                        Margin="0,0,10,0"
-                        Tapped="MoveBackwardButtonTapped"/>
-                    <Button Content="Далее" Width="120" Height="32"
-                        FontSize="14" FontWeight="Bold"
-                        FontFamily="{StaticResource MvideoFontBold}"
-                        Style="{StaticResource MVideoButtonStyle}"
-                        Tapped="MoveForwardButtonTapped"
-                        Background="Red"
-                        IsEnabled="{x:Bind _viewModel.DeliveryAddressViewModel.IsViewValid, Mode=OneWay}"/>
-                </StackPanel>
-            </Grid>
-            <Grid x:Name="DateTimeContainer">
-                <Grid.RowDefinitions>
-                    <!-- 0 - CalendarDatePicker -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- 1 - Выберите промежуток времени -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- 2 - RadioButtons -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- 3 - Buttons -->
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <!-- 0 - Space -->
-                    <ColumnDefinition Width="15"/>
-                    <!-- 1 - Content -->
-                    <ColumnDefinition Width="*"/>
-                    <!-- 2 - Space -->
-                    <ColumnDefinition Width="15"/>
-                </Grid.ColumnDefinitions>
-                <controls:RTDCalendarDatePicker x:Name="CalendarDatePicker" Grid.Column="1"
-                                    Width="246" Margin="0,0,20,0"
-                                    EnableDates="{Binding DeliveryDateTimeViewModel.EnabledDates, Mode=OneWay}"
-                                    IsLoading="{x:Bind _viewModel.DeliveryDateTimeViewModel.AreDatesLoading, Mode=OneWay}"
-                                    Date="{x:Bind _viewModel.DeliveryDateTimeViewModel.SelectedQuotumDate, Mode=TwoWay}"
-                                                Closed="OnCalendarDatePickerClosed">
-                    <controls:RTDCalendarDatePicker.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock Foreground="#696969"
-                                       Text="Выберите дату:" 
-                                       FontSize="16" FontFamily="{StaticResource MvideoFontRegular}"/>
-                        </DataTemplate>
-                    </controls:RTDCalendarDatePicker.HeaderTemplate>
-                </controls:RTDCalendarDatePicker>
-                <TextBlock x:Name="ChooseQuotaLabel" Grid.Row="1" Grid.Column="1" Text="Выберите промежуток времени:"
-                           FontSize="16" FontFamily="{StaticResource MvideoFontRegular}" Foreground="#696969"
-                           Visibility="Collapsed" Margin="0,25,0,21"/>
-                <ItemsControl x:Name="QuotumsItemsControl" Grid.Row="2" Grid.Column="1"
-                              ItemsSource="{x:Bind _viewModel.DeliveryDateTimeViewModel.DeliveryQuotum.Quotas, Mode=OneWay}"
-                              Background="Red" HorizontalAlignment="Left"
-                              Width="505" Margin="0,0,0,20">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="models:Quota">
-                            <Grid Width="214" Margin="0,0,77,0">
-                                <controls:RTDRadioButton GroupName="QuotumsGroup" Style="{StaticResource RadioButtonWithArrow}"
-                                                         Group="{StaticResource RTDRadioButtonGroup}"
-                                                         Height="40" Tag="{x:Bind Mode=OneWay}"
-                                                         Checked="QuotaRadioButtonChecked">
-                                    <controls:RTDRadioButton.Content>
-                                        <TextBlock Text="{x:Bind Mode=OneWay, Converter={StaticResource DateTimeQuotumFormatter}}"/>
-                                    </controls:RTDRadioButton.Content>
-                                </controls:RTDRadioButton>
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <ItemsWrapGrid Orientation="Vertical"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-                <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right"
-                            Margin="0,15,0,0">
-                    <Button Content="Назад" Width="120" Height="32"
-                        FontSize="14" FontWeight="Bold"
-                        FontFamily="{StaticResource MvideoFontBold}"
-                        Style="{StaticResource MVideoButtonStyle}"
-                        Margin="0,0,10,0"
-                        Tapped="MoveBackwardButtonTapped"/>
-                    <Button Content="Далее" Width="120" Height="32"
-                        FontSize="14" FontWeight="Bold"
-                        FontFamily="{StaticResource MvideoFontBold}"
-                        Style="{StaticResource MVideoButtonStyle}"
-                        Tapped="MoveForwardButtonTapped"
-                        Background="Red"
-                            IsEnabled="{x:Bind _viewModel.DeliveryDateTimeViewModel.IsViewValid, Mode=OneWay}"/>
-                </StackPanel>
-            </Grid>
-            <Grid x:Name="RecipientFormContainer">
-                <Grid.RowDefinitions>
-                    <!-- 0 - Info -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- 1 - Space -->
-                    <RowDefinition Height="9"/>
-                    <!-- 2 - Fields -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- 3 - Space -->
-                    <RowDefinition Height="35"/>
-                    <!-- 4 - Buttons -->
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="15"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="15"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="{StaticResource MvideoFontRegular}" FontSize="13" Foreground="#949494">
-                    <Run Text="Все поля, отмеченные знаком «"/>
-                    <Run Text="*" FontSize="16" Foreground="#9F0012"/>
-                    <Run Text="», обязательны к заполнению"/>
-                </TextBlock>
-                <Grid Grid.Row="2" Grid.Column="1" Height="213">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="57.5"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Orientation="Vertical">
-                        <controls:PickUpTextBox PlaceholderText="Иванов" Header="Фамилия" IsNecessarily="True"
-                                            FontSize="16" FieldType="Surname"
-                                            RegexPattern="^[а-яА-ЯёЁa-zA-Z]{2,40}$"
-                                            IsValid="{x:Bind _viewModel.DeliveryRecipientViewModel.IsNameValid, Mode=TwoWay}"/>
-                        <controls:PickUpTextBox PlaceholderText="Константин" Header="Имя" IsNecessarily="True"
-                                            FontSize="16" FieldType="Name"
-                                            RegexPattern="^[а-яА-ЯёЁa-zA-Z]{2,40}$"
-                                            IsValid="{x:Bind _viewModel.DeliveryRecipientViewModel.IsSurnameValid, Mode=TwoWay}"/>
-                        <controls:PickUpTextBox PlaceholderText="Константинович" Header="Отчество" IsNecessarily="False"
-                                            FontSize="16" FieldType="Patronym"
-                                            RegexPattern="^[а-яА-ЯёЁa-zA-Z]{2,40}$"
-                                            IsValid="{x:Bind _viewModel.DeliveryRecipientViewModel.IsPatronymValid, Mode=TwoWay}"/>
-                    </StackPanel>
-                    <Rectangle Grid.Column="1" Fill="#DADADA" Width="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,2,0,7"/>
-                    <StackPanel Grid.Column="2" Orientation="Vertical">
-                        <controls:PickUpTextBox PlaceholderText="8 956 476 89 67" Header="Телефон" IsNecessarily="True"
-                                            FontSize="16" FieldType="Phone"
-                                            RegexPattern="^8 \d{3}\ \d{3}\ \d{2}\ \d{2}$"
-                                            IsValid="{x:Bind _viewModel.DeliveryRecipientViewModel.IsPhoneValid, Mode=TwoWay}"/>
-                        <controls:PickUpTextBox PlaceholderText="example@email.ru" Header="Email" IsNecessarily="False"
-                                            FontSize="16" FieldType="Email"
-                                            RegexPattern="^(['\w'\.'\-]+)@([\w\-]+)((\.(\w){2,4})+)$"
-                                            IsValid="{x:Bind _viewModel.DeliveryRecipientViewModel.IsEmailValid, Mode=TwoWay}"/>
-                        <controls:PickUpTextBox PlaceholderText="8 956 476 89 67" Header="Дополнительный телефон" IsNecessarily="False"
-                                            FontSize="16" FieldType="Phone"
-                                            RegexPattern="^8 \d{3}\ \d{3}\ \d{2}\ \d{2}$"
-                                            IsValid="{x:Bind _viewModel.DeliveryRecipientViewModel.IsSecondPhoneValid, Mode=TwoWay}"/>
-                    </StackPanel>
-                </Grid>
-                <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Content="Назад" Width="120" Height="32"
-                        FontSize="14" FontWeight="Bold"
-                        FontFamily="{StaticResource MvideoFontBold}"
-                        Style="{StaticResource MVideoButtonStyle}"
-                        Margin="0,0,10,0"
-                        Tapped="MoveBackwardButtonTapped"/>
-                    <Button Content="Готово" Width="120" Height="32"
-                        FontSize="14" FontWeight="Bold"
-                            Background="Red"
-                        FontFamily="{StaticResource MvideoFontBold}"
-                        Style="{StaticResource MVideoButtonStyle}"
-                        Tapped="MoveForwardButtonTapped"
-                        IsEnabled="{x:Bind _viewModel.DeliveryRecipientViewModel.IsViewValid, Mode=OneWay}"/>
-                </StackPanel>
-            </Grid>
-        </Grid>
-        <Grid x:Name="LoadingRingContainer"
-              Grid.Row="5" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"
-              Visibility="Collapsed" Background="Transparent">
-            <ProgressRing Width="50" Height="50" Foreground="Red" IsActive="True"/>
+        <Grid Grid.Row="5" Grid.Column="1">
+            <views:DeliveryAddressView x:Name="DeliveryAddressView"
+                                       CancelButtonTapped="DeliveryAddressViewCancelButtonTapped"
+                                       ForwardButtonTapped="DeliveryAddressViewForwardButtonTapped"
+                                       ViewModel="{x:Bind ViewModel.DeliveryAddressViewModel, Mode=OneWay}"/>
+            <views:DeliveryDateTimeView x:Name="DeliveryDateTimeView"
+                                        BackwardButtonTapped="DeliveryDateTimesViewBackwardButtonTapped"
+                                        ForwardButtonTapped="DeliveryDateTimeViewForwardButtonTapped"
+                                        ViewModel="{x:Bind ViewModel.DeliveryDateTimeViewModel, Mode=OneWay}"/>
+            <views:DeliveryRecipientView x:Name="DeliveryRecipientView"
+                                         BackwardButtonTapped="DeliveryRecipientViewBackwardButtonTapped"
+                                         FinishButtonTapped="DeliveryRecipientViewFinishButtonTapped"
+                                         ViewModel="{x:Bind ViewModel.DeliveryRecipientViewModel, Mode=OneWay}"/>
         </Grid>
     </Grid>
 </UserControl>
