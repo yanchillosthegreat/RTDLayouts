@@ -128,14 +128,17 @@
     <Compile Include="Models\Warehouse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Themes\DataTemplates.cs" />
-    <Compile Include="ViewModels\ApproveOrderingViewModel.cs" />
+    <Compile Include="ViewModels\Ordering\ApproveOrderingViewModel.cs" />
     <Compile Include="ViewModels\AvailabilityOnObjectsViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BindableBase.cs" />
-    <Compile Include="ViewModels\DeliveryRegistrationViewModel.cs" />
+    <Compile Include="ViewModels\Ordering\DeliveryRegistration\DeliveryAddressViewModel.cs" />
+    <Compile Include="ViewModels\Ordering\DeliveryRegistration\DeliveryDateTimeViewModel.cs" />
+    <Compile Include="ViewModels\Ordering\DeliveryRegistration\DeliveryRecipientViewModel.cs" />
+    <Compile Include="ViewModels\Ordering\DeliveryRegistration\DeliveryRegistrationViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
-    <Compile Include="ViewModels\OrderingViewModel.cs" />
-    <Compile Include="ViewModels\PickupRegistrationViewModel.cs" />
+    <Compile Include="ViewModels\Ordering\OrderingViewModel.cs" />
+    <Compile Include="ViewModels\Ordering\PickupRegistrationViewModel.cs" />
     <Compile Include="Views\AvailabilityOnObjects\AvailabilityOnObjectsView.xaml.cs">
       <DependentUpon>AvailabilityOnObjectsView.xaml</DependentUpon>
     </Compile>
@@ -145,7 +148,16 @@
     <Compile Include="Views\Ordering\ContentDialogs\ChangeProductsBlockView.xaml.cs">
       <DependentUpon>ChangeProductsBlockView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Ordering\ContentDialogs\DeliveryRegistrationView.xaml.cs">
+    <Compile Include="Views\Ordering\ContentDialogs\DeliveryRegistration\DeliveryAddressView.xaml.cs">
+      <DependentUpon>DeliveryAddressView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Ordering\ContentDialogs\DeliveryRegistration\DeliveryDateTimeView.xaml.cs">
+      <DependentUpon>DeliveryDateTimeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Ordering\ContentDialogs\DeliveryRegistration\DeliveryRecipientView.xaml.cs">
+      <DependentUpon>DeliveryRecipientView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Ordering\ContentDialogs\DeliveryRegistration\DeliveryRegistrationView.xaml.cs">
       <DependentUpon>DeliveryRegistrationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Ordering\OrderingView.xaml.cs">
@@ -261,7 +273,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Ordering\ContentDialogs\DeliveryRegistrationView.xaml">
+    <Page Include="Views\Ordering\ContentDialogs\DeliveryRegistration\DeliveryAddressView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Ordering\ContentDialogs\DeliveryRegistration\DeliveryDateTimeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Ordering\ContentDialogs\DeliveryRegistration\DeliveryRecipientView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Ordering\ContentDialogs\DeliveryRegistration\DeliveryRegistrationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -147,7 +147,7 @@
                                             RegexPattern="^[а-яА-ЯёЁa-zA-Z]{2,40}$"
                                             IsValid="{x:Bind _viewModel.IsPatronymValid, Mode=TwoWay}"/>
                 </StackPanel>
-                <Rectangle Grid.Column="1" Fill="#DADADA" Width="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,5,0,0"/>
+                <Rectangle Grid.Column="1" Fill="#DADADA" Width="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,2,0,7"/>
                 <StackPanel Grid.Column="2" Orientation="Vertical">
                     <controls:PickUpTextBox PlaceholderText="8 956 476 89 67" Header="Телефон" IsNecessarily="True"
                                             FontSize="16" FieldType="Phone"

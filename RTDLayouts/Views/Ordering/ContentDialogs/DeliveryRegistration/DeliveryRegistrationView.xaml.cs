@@ -85,7 +85,7 @@ namespace RTDLayouts.Views
                     VisualStateManager.GoToState(SecondStep, "Current", true);
                     VisualStateManager.GoToState(LastStep, "Next", true);
                     VisualStateManager.GoToState(this, "DateTimeState", true);
-                    await _viewModel.GetDates();
+                    await _viewModel.DeliveryDateTimeViewModel.GetDates();
                     break;
                 case Position.Last:
                     VisualStateManager.GoToState(FirstStep, "Passed", true);
@@ -165,25 +165,25 @@ namespace RTDLayouts.Views
         {
             if (sender is RTDRadioButton radioButton && radioButton.Tag is Quota quota)
             {
-                _viewModel.SelectedQuota = quota;
+                _viewModel.DeliveryDateTimeViewModel.SelectedQuota = quota;
             }
         }
 
         private async void DaDataButtonTapped(object sender, TappedRoutedEventArgs e)
         {
             VisualStateManager.GoToState(this, "LoadingState", true);
-            await _viewModel.DoDaData();
+            await _viewModel.DeliveryAddressViewModel.DoDaData();
             VisualStateManager.GoToState(this, "ReadyState", true);
         }
 
         private async void OnCalendarDatePickerClosed(object sender, object e)
         {
             VisualStateManager.GoToState(this, "LoadingState", true);
-            await _viewModel.LoadQoutums();
+            await _viewModel.DeliveryDateTimeViewModel.LoadQoutums();
             VisualStateManager.GoToState(this, "ReadyState", true);
 
             VisualStateManager.GoToState(this,
-                _viewModel.SelectedQuotumDate == null ? "QuotumsCollapsedState" : "QuotumsVisibleState", true);
+                _viewModel.DeliveryDateTimeViewModel.SelectedQuotumDate == null ? "QuotumsCollapsedState" : "QuotumsVisibleState", true);
         }
     }
 }
